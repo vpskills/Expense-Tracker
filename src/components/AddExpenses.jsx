@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { formatDate } from '../utils';
 import InputField from '../ui/InputField';
 import SelectField from '../ui/SelectField';
+import { addExpense } from '../store/actions/expenses.actions';
 
 const AddExpenses = ({ selectedDate, setExpenses }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -88,7 +89,7 @@ const AddExpenses = ({ selectedDate, setExpenses }) => {
     { id: 'other', label: 'Other', emoji: '📦' },
   ];
 
-  const addExpense = () => {
+  const addExpenseFn = async () => {
     if (!description.trim()) {
       alert('Please enter a description');
       return;
@@ -104,13 +105,15 @@ const AddExpenses = ({ selectedDate, setExpenses }) => {
       return;
     }
 
-    const newExpense = {
-      id: Date.now(),
-      amount,
+    const newExpenseData = {
+      amount: parseFloat(amount),
       description,
-      category: selectedCategory,
-      timestamp: new Date().toISOString(),
+      categoryId: selectedCategory,  // IMPORTANT: Use categoryId, not just label
+      date: selectedDate,
+      userId: "clm3pj0ds00009k7q4qf0a3gq", // get from auth context later
     };
+
+    await addExpense(newExpenseData);
 
     const dateStr = formatDate(selectedDate);
 
@@ -151,7 +154,7 @@ const AddExpenses = ({ selectedDate, setExpenses }) => {
         />
 
         <button
-          onClick={addExpense}
+          onClick={addExpenseFn}
           className="w-full bg-emerald-600 text-white font-semibold mt-5 py-3 px-6 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
         >
           Add Expense
