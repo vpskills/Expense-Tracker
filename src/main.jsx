@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import reduxStore from './store/store.js';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App.jsx';
 import AuthWrapper from './components/AuthWrapper.jsx';
@@ -8,6 +8,7 @@ import Home from './Pages/Home.jsx';
 import Login from './Pages/Login.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Signup from './Pages/Signup.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,14 +31,14 @@ const router = createBrowserRouter([
           </AuthWrapper>
         ),
       },
-      // {
-      //   path: 'signup',
-      //   element: (
-      //     <AuthWrapper authenticate={false}>
-      //       <Signup />
-      //     </AuthWrapper>
-      //   ),
-      // },
+      {
+        path: 'signup',
+        element: (
+          <AuthWrapper authenticate={false}>
+            <Signup />
+          </AuthWrapper>
+        ),
+      },
     ],
   },
 ]);
