@@ -40,5 +40,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include": ["src", "prisma/seed.js"]
+  "include": ["src", "/prisma.config.ts"]
 }

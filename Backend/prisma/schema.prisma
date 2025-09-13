@@ -18,6 +18,7 @@ model User {
   name      String
   email     String   @unique
   password  String
+  refreshToken String?
   expenses  Expense[]
   createdAt DateTime @default(now())
 }

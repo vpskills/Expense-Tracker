@@ -3,10 +3,9 @@ import { AuthEndPoints } from '../common/endpoints';
 
 export const userLogin = async (body) => {
   const obj = {
-    url: `${AuthEndPoints.Login}`,
+    url: `${AuthEndPoints.Signin}`,
     method: 'POST',
     body: JSON.stringify(body),
-    isNoToken: true,
   };
   return await API(obj);
 };

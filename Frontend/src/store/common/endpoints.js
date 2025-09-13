@@ -6,7 +6,7 @@ export const ExpensesEndPoints = {
 };
 
 export const AuthEndPoints = {
-  Login: 'api/v1/user/login',
+  Signin: 'api/v1/user/signin',
   Signup: 'api/v1/user/signup',
   Logout: 'api/v1/user/logout'
 };

@@ -7,6 +7,7 @@ import { login, logout } from '../store/slices/authSlice';
 import InputField from '../ui/InputField';
 import Button from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
+import toast, { Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
 const SignupForm = () => {
@@ -29,13 +30,15 @@ const SignupForm = () => {
     mutationFn: userSignup,
     onSuccess: (userData) => {
       if (userData) {
+        localStorage.setItem('access', userData?.accessToken);
+        localStorage.setItem('refresh', userData?.refreshToken);
         dispatch(login(userData));
         navigate('/');
-      } else {
-        dispatch(logout());
-        alert('Getting user details failed!');
-        navigate('/login');
+        toast.success(userData?.message || 'Signup Successfull');
       }
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Signup failed');
     },
   });
 
@@ -60,7 +63,7 @@ const SignupForm = () => {
     <div className="w-full max-w-md mx-auto pt-32">
       <div className="border border-neutral-700 rounded-2xl p-8 sm:p-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Welcome</h1>
+          <h1 className="text-3xl font-bold text-gray-400">Welcome</h1>
           <p className="text-gray-500 mt-2">Create Your Account</p>
         </div>
 
@@ -133,6 +136,7 @@ const SignupForm = () => {
           </Button>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };

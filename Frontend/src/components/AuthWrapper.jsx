@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthWrapper = ({ children, authenticate = true }) => {
   const authStatus = useSelector((state) => state.auth?.status);
+  console.log(authStatus, 'asdf')
   const navigate = useNavigate();
 
   useEffect(() => {

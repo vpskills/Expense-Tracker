@@ -1,16 +1,17 @@
-import { useState } from "react";
-import { Mail, Lock } from "lucide-react";
-import { userLogin } from "../store/actions/auth.actions.js";
-import { login, logout } from "../store/slices/authSlice.js";
-import { Link, useNavigate } from "react-router-dom";
-import InputField from "../ui/InputField.jsx";
-import { useDispatch } from "react-redux";
-import Button from "../ui/Button.jsx";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from 'react';
+import { Mail, Lock } from 'lucide-react';
+import { userLogin } from '../store/actions/auth.actions.js';
+import { login, logout } from '../store/slices/authSlice.js';
+import { Link, useNavigate } from 'react-router-dom';
+import InputField from '../ui/InputField.jsx';
+import { useDispatch } from 'react-redux';
+import Button from '../ui/Button.jsx';
+import { useMutation } from '@tanstack/react-query';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,17 +20,18 @@ export default function LoginForm() {
     mutationFn: userLogin,
     onSuccess: (userData) => {
       if (userData) {
+        console.log(userData);
         dispatch(login(userData));
-        navigate("/");
+        navigate('/');
+        toast.success(userData?.message || 'Signup Successfull');
       } else {
         dispatch(logout());
-        alert("Getting user details failed!");
-        navigate("/login");
+        toast.error('Getting user details failed!');
       }
     },
     onError: (error) => {
-      console.error("Login failed:", error);
-      alert("Login failed. Please check your credentials.");
+      toast.error(error.message || 'Login failed!');
+      console.error('Login failed:', error);
     },
   });
 
@@ -44,7 +46,7 @@ export default function LoginForm() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-neutral-400">Welcome Back</h1>
           <p className="text-gray-500 mt-2">
-            Sign in to your account or{" "}
+            Sign in to your account or{' '}
             <Link to="/signup" className="text-blue-600 hover:underline">
               signup
             </Link>
@@ -63,7 +65,7 @@ export default function LoginForm() {
           />
 
           <InputField
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
             icon={Lock}
             value={password}
@@ -80,6 +82,7 @@ export default function LoginForm() {
           </Button>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 }

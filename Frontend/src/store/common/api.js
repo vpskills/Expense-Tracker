@@ -27,11 +27,15 @@ export default async function API({
   }
 
   if (caching) {
-    options.headers['Cache-Control'] =
-    "public, max-age=86400";
+    options.headers['Cache-Control'] = 'public, max-age=86400';
   }
 
   const res = await fetch(`${import.meta.env.VITE_API_URL}${url}`, options);
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.message || 'Signup failed');
+  }
 
   if (isResponseJSON) {
     return await res.json();
