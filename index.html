@@ -1,13 +1,664 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Expense Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 32px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        #calendarDays {
+            display: contents;
+        }
+
+        .calendar-nav {
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .calendar-nav:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .month-year {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .day-header {
+            text-align: center;
+            font-weight: 600;
+            color: #6b7280;
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .day:hover {
+            background: #f3f4f6;
+            transform: scale(1.05);
+        }
+
+        .day.selected {
+            background: #6366f1;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .day.has-expenses {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .day.has-expenses.selected {
+            background: #6366f1;
+            border-color: #4f46e5;
+        }
+
+        .day.other-month {
+            color: #d1d5db;
+        }
+
+        .expense-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .category-select {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .category-btn {
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .category-btn:hover {
+            border-color: #6366f1;
+            transform: translateY(-2px);
+        }
+
+        .category-btn.selected {
+            background: #6366f1;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .expenses-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+
+        .expense-item:hover {
+            background: #f3f4f6;
+            transform: translateX(4px);
+        }
+
+        .expense-details {
+            flex: 1;
+        }
+
+        .expense-description {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .expense-category {
+            font-size: 0.9rem;
+            color: #6b7280;
+            background: #e5e7eb;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .expense-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #fecaca;
+            transform: scale(1.05);
+        }
+
+        .total-section {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            text-align: center;
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .total-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .total-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .no-expenses {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .header {
+                padding: 24px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .category-select {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Expense Tracker</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="section">
+                <h2>📅 Select Date</h2>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">‹</button>
+                        <div class="month-year" id="monthYear"></div>
+                        <button class="calendar-nav" id="nextMonth">›</button>
+                    </div>
+                    <div class="day-header">Sun</div>
+                    <div class="day-header">Mon</div>
+                    <div class="day-header">Tue</div>
+                    <div class="day-header">Wed</div>
+                    <div class="day-header">Thu</div>
+                    <div class="day-header">Fri</div>
+                    <div class="day-header">Sat</div>
+                    <div id="calendarDays"></div>
+                </div>
+
+                <h2>➕ Add Expense</h2>
+                <form class="expense-form" id="expenseForm">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-input" id="description" placeholder="What did you spend on?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Amount ($)</label>
+                        <input type="number" class="form-input" id="amount" placeholder="0.00" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Category</label>
+                        <div class="category-select">
+                            <div class="category-btn" data-category="food">🍕 Food</div>
+                            <div class="category-btn" data-category="transport">🚗 Transport</div>
+                            <div class="category-btn" data-category="entertainment">🎬 Fun</div>
+                            <div class="category-btn" data-category="shopping">🛒 Shopping</div>
+                            <div class="category-btn" data-category="bills">📄 Bills</div>
+                            <div class="category-btn" data-category="other">📦 Other</div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Add Expense</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>📋 Today's Expenses</h2>
+                <div class="expenses-list" id="expensesList">
+                    <div class="no-expenses">No expenses recorded for this date</div>
+                </div>
+            </div>
+
+            <div class="total-section">
+                <div class="total-amount" id="totalAmount">$0.00</div>
+                <div class="total-label">Total for <span id="selectedDateDisplay">Today</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDate = new Date();
+        let selectedDate = new Date();
+        let selectedCategory = '';
+        let expenses = {};
+
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function formatDisplayDate(date) {
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            document.getElementById('monthYear').textContent = 
+                currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '';
+
+            // Previous month days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day other-month';
+                dayEl.textContent = day;
+                calendarDays.appendChild(dayEl);
+            }
+
+            // Current month days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day';
+                dayEl.textContent = day;
+                
+                const dateStr = formatDate(new Date(year, month, day));
+                
+                if (expenses[dateStr] && expenses[dateStr].length > 0) {
+                    dayEl.classList.add('has-expenses');
+                }
+                
+                if (day === selectedDate.getDate() && 
+                    month === selectedDate.getMonth() && 
+                    year === selectedDate.getFullYear()) {
+                    dayEl.classList.add('selected');
+                }
+
+                dayEl.addEventListener('click', () => {
+                    selectedDate = new Date(year, month, day);
+                    renderCalendar();
+                    updateExpensesList();
+                    updateTotal();
+                    document.getElementById('selectedDateDisplay').textContent = 
+                        formatDisplayDate(selectedDate);
+                });
+
+                calendarDays.appendChild(dayEl);
+            }
+
+            // Next month days
+            const totalCells = calendarDays.children.length;
+            const remainingCells = 42 - totalCells; // 6 rows × 7 days
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day other-month';
+                dayEl.textContent = day;
+                calendarDays.appendChild(dayEl);
+            }
+        }
+
+        function updateExpensesList() {
+            const dateStr = formatDate(selectedDate);
+            const expensesList = document.getElementById('expensesList');
+            const dayExpenses = expenses[dateStr] || [];
+
+            if (dayExpenses.length === 0) {
+                expensesList.innerHTML = '<div class="no-expenses">No expenses recorded for this date</div>';
+                return;
+            }
+
+            expensesList.innerHTML = dayExpenses.map((expense, index) => `
+                <div class="expense-item">
+                    <div class="expense-details">
+                        <div class="expense-description">${expense.description}</div>
+                        <div class="expense-category">${getCategoryEmoji(expense.category)} ${expense.category}</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div class="expense-amount">$${expense.amount.toFixed(2)}</div>
+                        <button class="delete-btn" onclick="deleteExpense('${dateStr}', ${index})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryEmoji(category) {
+            const emojis = {
+                food: '🍕',
+                transport: '🚗',
+                entertainment: '🎬',
+                shopping: '🛒',
+                bills: '📄',
+                other: '📦'
+            };
+            return emojis[category] || '📦';
+        }
+
+        function updateTotal() {
+            const dateStr = formatDate(selectedDate);
+            const dayExpenses = expenses[dateStr] || [];
+            const total = dayExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function deleteExpense(dateStr, index) {
+            expenses[dateStr].splice(index, 1);
+            if (expenses[dateStr].length === 0) {
+                delete expenses[dateStr];
+            }
+            updateExpensesList();
+            updateTotal();
+            renderCalendar();
+        }
+
+        // Event listeners
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCategory = btn.dataset.category;
+            });
+        });
+
+        document.getElementById('expenseForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const description = document.getElementById('description').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            
+            if (!selectedCategory) {
+                alert('Please select a category');
+                return;
+            }
+
+            const dateStr = formatDate(selectedDate);
+            if (!expenses[dateStr]) {
+                expenses[dateStr] = [];
+            }
+
+            expenses[dateStr].push({
+                description,
+                amount,
+                category: selectedCategory,
+                timestamp: new Date().toISOString()
+            });
+
+            // Reset form
+            document.getElementById('expenseForm').reset();
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('selected'));
+            selectedCategory = '';
+
+            updateExpensesList();
+            updateTotal();
+            renderCalendar();
+        });
+
+        // Alternative button click handler (backup)
+        document.querySelector('.submit-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const description = document.getElementById('description').value.trim();
+            const amount = parseFloat(document.getElementById('amount').value);
+            
+            // Validation
+            if (!description) {
+                alert('Please enter a description');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            if (!selectedCategory) {
+                alert('Please select a category');
+                return;
+            }
+
+            const dateStr = formatDate(selectedDate);
+            if (!expenses[dateStr]) {
+                expenses[dateStr] = [];
+            }
+
+            expenses[dateStr].push({
+                description,
+                amount,
+                category: selectedCategory,
+                timestamp: new Date().toISOString()
+            });
+
+            // Reset form
+            document.getElementById('description').value = '';
+            document.getElementById('amount').value = '';
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('selected'));
+            selectedCategory = '';
+
+            updateExpensesList();
+            updateTotal();
+            renderCalendar();
+            
+            // Success feedback
+            const btn = e.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Added!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 1000);
+        });
+
+        // Initialize
+        renderCalendar();
+        updateExpensesList();
+        updateTotal();
+        document.getElementById('selectedDateDisplay').textContent = formatDisplayDate(selectedDate);
+    </script>
+</body>
 </html>
