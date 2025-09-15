@@ -20,7 +20,8 @@ export default function LoginForm() {
     mutationFn: userLogin,
     onSuccess: (userData) => {
       if (userData) {
-        console.log(userData);
+        localStorage.setItem('access', userData?.accessToken);
+        localStorage.setItem('refresh', userData?.refreshToken);
         dispatch(login(userData));
         navigate('/');
         toast.success(userData?.message || 'Signup Successfull');

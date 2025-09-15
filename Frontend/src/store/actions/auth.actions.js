@@ -20,3 +20,10 @@ export const userSignup = async (body) => {
   return await API(obj);
 };
 
+export const getCurrentUser = async () => {
+  const obj = {
+    url: `${AuthEndPoints.GetUser}`,
+    method: 'GET',
+  };
+  return await API(obj);
+};

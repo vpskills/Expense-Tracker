@@ -34,7 +34,7 @@ export default async function API({
 
   if (!res.ok) {
     const data = await res.json();
-    throw new Error(data.message || 'Signup failed');
+    throw new Error(data.message || 'Request failed');
   }
 
   if (isResponseJSON) {

@@ -1,36 +1,16 @@
-// Even though prisma.$connect() isn’t required (Prisma will auto-connect), in production it’s recommended to do this at startup
-
-import app from "./app.js";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import app from './app.js';
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-async function startServer() {
-  try {
-    await prisma.$connect();
-    console.log("✅ Database connected");
+app.listen(port, function () {
+  console.log(`Express Server initiated listening on port ${port}`);
+});
 
-    const server = app.listen(port, () => {
-      console.log(`🚀 Express server running on port ${port}`);
-    });
+process.on('SIGTERM', function () {
+  console.log(`SIGTERM signal received: closing HTTP server.`);
+  process.exit();
+});
 
-    // Graceful shutdown
-    process.on("SIGTERM", async () => {
-      console.log("SIGTERM received: shutting down gracefully...");
-      await prisma.$disconnect();
-      server.close(() => process.exit(0));
-    });
-
-    process.on("SIGINT", async () => {
-      console.log("SIGINT received: shutting down gracefully...");
-      await prisma.$disconnect();
-      server.close(() => process.exit(0));
-    });
-  } catch (err) {
-    console.error("❌ Could not start server:", err);
-    process.exit(1);
-  }
-}
-
-startServer();
+process.on('SIGINT', function () {
+  console.log(`SIGINT signal received: closing HTTP server.`);
+  process.exit();
+});
