@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { errorHandler } from "./middleware/errorHandler.middleware.js";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { errorHandler } from './middleware/errorHandler.middleware.js';
 
 dotenv.config();
 
@@ -17,14 +17,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //ROUTES
-import userRoutes from "./routes/user.routes.js";
+import userRoutes from './routes/user.routes.js';
+import categoryRoute from './routes/category.routes.js';
+import expensesRoute from './routes/expense.routes.js';
 
-app.use("/api/v1/user", userRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/categories', categoryRoute);
+app.use('/api/v1/expenses', expensesRoute);
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.send("Hello World 👋, I'm Expenses Server");
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 export default app;

@@ -7,7 +7,7 @@ import { login, logout } from '../store/slices/authSlice';
 import InputField from '../ui/InputField';
 import Button from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { z } from 'zod';
 
 const SignupForm = () => {
@@ -136,7 +136,6 @@ const SignupForm = () => {
           </Button>
         </form>
       </div>
-      <Toaster />
     </div>
   );
 };

@@ -12,10 +12,9 @@ export const fetchExpensesByDate = async (date) => {
 
 export const addExpense = async (expense) => {
   const obj = {
-    url: `${ExpensesEndPoints.GetExpense}`,
+    url: `${ExpensesEndPoints.AddExpense}`,
     method: 'POST',
     body: JSON.stringify(expense),
-    isNoToken: true,
   };
   return await API(obj);
 };

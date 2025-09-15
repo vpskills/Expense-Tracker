@@ -7,7 +7,7 @@ import InputField from '../ui/InputField.jsx';
 import { useDispatch } from 'react-redux';
 import Button from '../ui/Button.jsx';
 import { useMutation } from '@tanstack/react-query';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -83,7 +83,6 @@ export default function LoginForm() {
           </Button>
         </form>
       </div>
-      <Toaster />
     </div>
   );
 }

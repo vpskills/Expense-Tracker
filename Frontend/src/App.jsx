@@ -1,7 +1,5 @@
-import Calendar from './components/Calendar';
-import ExpenseTracker from './components/ExpenseTracker';
+import { Toaster } from 'react-hot-toast';
 import { useAuth } from './hooks/useAuth';
-import Home from './Pages/Home';
 import { Outlet } from 'react-router-dom';
 
 function App() {
@@ -18,6 +16,7 @@ function App() {
   return (
     // <ExpenseTracker/>
     <div className="bg-neutral-900 min-h-svh">
+      <Toaster />
       <Outlet />
     </div>
   );
