@@ -1,3 +1,3 @@
 export const formatDate = (date) => {
-    return date.toISOString().split("T")[0];
-}
+  return new Date(date).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+};

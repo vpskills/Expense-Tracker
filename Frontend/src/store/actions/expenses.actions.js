@@ -2,10 +2,9 @@ import { ExpensesEndPoints } from "../common/endpoints";
 import API from "../common/api";
 
 export const fetchExpensesByDate = async (date) => {
+  if(!date) return;
   const obj = {
-    url: `${ExpensesEndPoints.GetExpense}`,
-    body: JSON.stringify(body),
-    isNoToken: true,
+    url: `${ExpensesEndPoints.GetExpense(date)}`,
   };
   return await API(obj);
 };

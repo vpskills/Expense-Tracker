@@ -8,7 +8,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchCategories } from '../store/actions/categories.actions';
 import toast from 'react-hot-toast';
 
-const AddExpenses = ({ selectedDate, setExpenses }) => {
+const AddExpenses = ({ selectedDate, setExpensesAdded }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -26,15 +26,14 @@ const AddExpenses = ({ selectedDate, setExpenses }) => {
     mutationFn: addExpense,
     onSuccess: (expenseData) => {
       toast.success(expenseData?.message || 'Expense added successfully!');
-      console.log(expenseData);
-
       setDescription('');
       setAmount('');
       setSelectedCategory('');
+      setExpensesAdded(true);
     },
     onError: (error) => {
       toast.error(error.message || 'Adding Expense Failed!');
-      console.log(error.message);
+      setExpensesAdded(false);
     },
   });
 
@@ -43,11 +42,12 @@ const AddExpenses = ({ selectedDate, setExpenses }) => {
       toast.error('Please enter a valid amount');
       return;
     }
+     const formattedDate = formatDate(selectedDate);
     const newExpenseData = {
       amount: parseFloat(amount),
       description: description?.trim() || null,
       categoryId: selectedCategory || null,
-      date: selectedDate,
+      date: formattedDate,
     };
     addExpenseMutation(newExpenseData);
   };
@@ -86,7 +86,7 @@ const AddExpenses = ({ selectedDate, setExpenses }) => {
         <button
           onClick={handleAddExpense}
           disabled={isPending}
-          className="w-full bg-emerald-600 text-white font-semibold mt-5 py-3 px-6 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
+          className="w-full bg-emerald-600 text-white font-semibold mt-3 py-3 px-6 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
         >
           Add Expense
         </button>

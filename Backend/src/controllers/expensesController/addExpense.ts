@@ -12,14 +12,18 @@ export const addExpense = async (req: AuthRequest, res: Response) => {
     throw new ApiError('All fields are required', 400);
   }
 
+  // Normalize to YYYY-MM-DD
+  const formattedDate = new Date(date).toISOString().split('T')[0];
+
   const expense = await prisma.expense.create({
     data: {
       amount: parseFloat(amount),
       description: description || null,
-      date: new Date(date),
+      date: formattedDate || "",
       userId: req.user!.id,
       categoryId: categoryId || null,
     },
+    include: { category: true },
   });
 
   if (!expense) {

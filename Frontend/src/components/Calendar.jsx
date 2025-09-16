@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Calendar = ({expenses, setExpenses, selectedDate, setSelectedDate}) => {
+const Calendar = ({selectedDate, setSelectedDate}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const navigateMonth = (direction) => {
@@ -61,9 +61,9 @@ const Calendar = ({expenses, setExpenses, selectedDate, setSelectedDate}) => {
   };
 
   return (
-    <div className="bg-neutral-950 p-5 rounded-2xl">
+    <div className="bg-neutral-950 p-2 rounded-2xl">
       {/* Calendar Header */}
-      <div className="flex justify-between items-center border border-neutral-700 rounded-xl p-5 bg-neutral-900 mx-auto">
+      <div className="flex justify-between items-center border border-neutral-700 rounded-xl p-2 bg-neutral-900 mx-auto">
         <button
           onClick={() => navigateMonth(-1)}
           className="bg-neutral-600 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
@@ -99,7 +99,7 @@ const Calendar = ({expenses, setExpenses, selectedDate, setSelectedDate}) => {
           <div
             key={index}
             onClick={() => setSelectedDate(dayObj.date)}
-            className={`p-12 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl ${
+            className={`py-3 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl ${
               dayObj.isCurrentMonth
                 ? "bg-gray-900 text-gray-400 hover:bg-gray-900"
                 : "bg-gray-950 text-gray-600 hover:bg-gray-900"
