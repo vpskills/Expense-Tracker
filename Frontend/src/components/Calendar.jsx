@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { isFutureDate } from '../utils';
 
-const Calendar = ({selectedDate, setSelectedDate}) => {
+const Calendar = ({ selectedDate, setSelectedDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const navigateMonth = (direction) => {
@@ -94,26 +95,16 @@ const Calendar = ({selectedDate, setSelectedDate}) => {
             {day}
           </div>
         ))}
-        
         {getDaysInMonth(currentDate).map((dayObj, index) => (
           <div
             key={index}
-            onClick={() => setSelectedDate(dayObj.date)}
-            className={`py-3 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl ${
-              dayObj.isCurrentMonth
-                ? "bg-gray-900 text-gray-400 hover:bg-gray-900"
-                : "bg-gray-950 text-gray-600 hover:bg-gray-900"
-            }
-            ${
-              isDateSelected(dayObj.date)
-                ? "bg-indigo-950 hover:bg-indigo-950"
-                : ""
-            }
-            ${
-              dayObj.isToday && !isDateSelected(dayObj.date)
-                ? "ring-2 ring-indigo-800 bg-indigo-950"
-                : ""
-            }`}
+            onClick={() => !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date))}
+            className={`py-3 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl
+            ${dayObj.isCurrentMonth ? 'bg-neutral-800 text-gray-400 hover:bg-gray-900' : 'bg-gray-950 text-gray-600 hover:bg-gray-900'}
+            ${isDateSelected(new Date(dayObj.date)) ? 'bg-rose-500 text-white hover:bg-rose-500' : ''}
+            ${dayObj.isToday && !isDateSelected(new Date(dayObj.date))? 'ring-2 ring-rose-700 bg-rose-950': ''}
+            ${isFutureDate(dayObj)? 'bg-gray-800 text-gray-700 cursor-not-allowed': 'cursor-pointer'}
+          `}
           >
             {dayObj.day}
           </div>

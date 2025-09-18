@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Mail, Lock, IdCard } from 'lucide-react';
 import { userSignup } from '../store/actions/auth.actions';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../store/slices/authSlice';
 import InputField from '../ui/InputField';
@@ -63,8 +63,13 @@ const SignupForm = () => {
     <div className="w-full max-w-md mx-auto pt-32">
       <div className="border border-neutral-700 rounded-2xl p-8 sm:p-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-400">Welcome</h1>
-          <p className="text-gray-500 mt-2">Create Your Account</p>
+          <h1 className="text-3xl font-bold text-neutral-400">Welcome</h1>
+          <p className="text-gray-500 mt-2">
+            Already have an account {' '}
+            <Link to="/login" className="text-blue-600 hover:underline">
+              login
+            </Link>
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6" noValidate>
