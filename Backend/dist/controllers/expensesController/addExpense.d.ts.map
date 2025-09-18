@@ -1,0 +1,1 @@
+{"version":3,"file":"addExpense.d.ts","sourceRoot":"","sources":["../../../src/controllers/expensesController/addExpense.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAW,QAAQ,EAAE,MAAM,SAAS,CAAC;AAEjD,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,qCAAqC,CAAC;AAKvE,eAAO,MAAM,UAAU,GAAU,KAAK,WAAW,EAAE,KAAK,QAAQ,kBA6B/D,CAAC"}
