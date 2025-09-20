@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { isFutureDate } from '../utils';
+import { isFutureDate, isToday } from '../utils';
+import { isMobile } from 'react-device-detect';
 
 const Calendar = ({ selectedDate, setSelectedDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -9,6 +10,13 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(currentDate.getMonth() + direction);
     setCurrentDate(newDate);
+  };
+
+  const navigateDate = (direction) => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() + direction);
+    setCurrentDate(newDate);
+    setSelectedDate(newDate);
   };
 
   const getDaysInMonth = (date) => {
@@ -66,20 +74,22 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
       {/* Calendar Header */}
       <div className="flex justify-between items-center border border-neutral-800 rounded-xl p-2 bg-neutral-900 mx-auto">
         <button
-          onClick={() => navigateMonth(-1)}
-          className="bg-neutral-800 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
+          onClick={() => (isMobile ? navigateDate(-1) : navigateMonth(-1))}
+          className="bg-neutral-800 hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all"
         >
           <ChevronLeft />
         </button>
         <h3 className="md:text-xl font-bold text-gray-400">
-          {currentDate.toLocaleDateString("en", {
-            month: "long",
-            year: "numeric",
+          {currentDate.toLocaleDateString('en-GB', {
+            day: isMobile ? 'numeric' : undefined,
+            month: 'long',
+            year: 'numeric',
           })}
         </h3>
         <button
-          onClick={() => navigateMonth(1)}
-          className="bg-neutral-800 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
+          disabled={isToday(selectedDate) && isMobile}
+          onClick={() => (isMobile ? navigateDate(1) : navigateMonth(1))}
+          className={`bg-neutral-800 ${isToday(selectedDate) && isMobile && "opacity-40 cursor-not-allowed"} hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all`}
         >
           <ChevronRight />
         </button>
@@ -87,11 +97,8 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
 
       {/* Calendar Grid */}
       <div className="hidden md:grid grid-cols-7 gap-2 my-4 rounded-xl">
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-          <div
-            key={day}
-            className="text-center font-semibold text-gray-300 p-3 text-lg rounded"
-          >
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          <div key={day} className="text-center font-semibold text-gray-300 p-3 text-lg rounded">
             {day}
           </div>
         ))}
@@ -100,10 +107,22 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
             key={index}
             onClick={() => !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date))}
             className={`py-3 border border-neutral-800 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl
-            ${dayObj.isCurrentMonth ? 'bg-neutral-900 text-gray-400 hover:bg-neutral-800' : 'text-gray-600 hover:bg-gray-900'}
-            ${isDateSelected(new Date(dayObj.date)) ? 'bg-rose-500 text-white hover:bg-rose-500' : ''}
-            ${dayObj.isToday && !isDateSelected(new Date(dayObj.date))? 'ring-2 ring-rose-700 bg-rose-950': ''}
-            ${isFutureDate(dayObj)? 'cursor-not-allowed': 'cursor-pointer'}
+            ${
+              dayObj.isCurrentMonth
+                ? 'bg-neutral-900 text-gray-400 hover:bg-neutral-800'
+                : 'text-gray-600 hover:bg-gray-900'
+            }
+            ${
+              isDateSelected(new Date(dayObj.date))
+                ? 'bg-rose-500 text-white hover:bg-rose-500'
+                : ''
+            }
+            ${
+              dayObj.isToday && !isDateSelected(new Date(dayObj.date))
+                ? 'ring-2 ring-rose-700 bg-rose-950'
+                : ''
+            }
+            ${isFutureDate(dayObj) ? 'cursor-not-allowed' : 'cursor-pointer'}
           `}
           >
             {dayObj.day}

@@ -92,8 +92,8 @@ const ListExpenses = ({ selectedDate }) => {
                 <div className="text-xs md:text-sm mb-1 font-semibold font-mon mr-2">{expense.description || 'No description'}</div>
                 {
                   <div className={`text-[12px] md:text-xs text-emerald-500 font-semibold inline-block`}>
-                    {isAnyExpenseMutating && !expense?.category ? (
-                      <h1 className="h-3 max-w-24 rounded-md bg-neutral-600 animate-pulse">&nbsp;</h1>
+                    {isAnyExpenseMutating && expense?.category===undefined ? (
+                      <h1 className="h-3 min-w-24 rounded-md bg-neutral-600 animate-pulse transition-all">&nbsp;</h1>
                     ) : (
                       expense?.category && `${expense?.category?.emoji} ${expense?.category?.label}`
                     )}

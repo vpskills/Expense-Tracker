@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchCategories } from '../store/actions/categories.actions';
 import toast from 'react-hot-toast';
 
-const AddExpenses = ({ selectedDate }) => {
+const AddExpenses = ({ selectedDate, setFormVisible }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -44,7 +44,7 @@ const AddExpenses = ({ selectedDate }) => {
           expenses: [{ ...newExpense, id: fakeId }, ...old.expenses],
         };
       });
-
+      setFormVisible((prev)=>!prev);
       return { previousExpenses, fakeId, queryKey };
     },
 
