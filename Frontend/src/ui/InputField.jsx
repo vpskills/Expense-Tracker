@@ -28,7 +28,7 @@ const InputField = forwardRef(
           ref={ref}
           className={`block w-full ${
             Icon ? "pl-10" : "pl-3"
-          } w-full px-4 py-3 outline-none border text-gray-400 bg-neutral-900 border-neutral-800 rounded-xl focus:ring-4 focus:ring-gray-600 transition-all ${className}`}
+          } w-full text-sm md:text-md px-4 py-3 outline-none border text-gray-400 bg-neutral-900 border-neutral-800 md:rounded-lg rounded-md focus:ring-4 focus:ring-gray-600 transition-all ${className}`}
           {...props}
         />
         {showPasswordToggle && (

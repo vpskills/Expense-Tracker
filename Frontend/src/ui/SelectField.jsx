@@ -15,7 +15,7 @@ const SelectField = ({
       <select
         value={value}
         onChange={onChange}
-        className="w-full p-4 rounded-lg border-2 border-neutral-800 bg-neutral-900 font-medium outline-none transition-all duration-200"
+        className="w-full text-sm md:text-md p-3 md:rounded-lg rounded-md border-2 border-neutral-800 bg-neutral-900 font-medium outline-none transition-all duration-200"
         {...props}
       >
         <option value="" disabled>

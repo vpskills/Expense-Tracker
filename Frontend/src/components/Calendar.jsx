@@ -62,7 +62,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   };
 
   return (
-    <div className="bg-neutral-950 p-2 rounded-2xl border border-neutral-800">
+    <div className="bg-neutral-950 p-2 md:rounded-2xl md:border border-neutral-800">
       {/* Calendar Header */}
       <div className="flex justify-between items-center border border-neutral-800 rounded-xl p-2 bg-neutral-900 mx-auto">
         <button
@@ -71,7 +71,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         >
           <ChevronLeft />
         </button>
-        <h3 className="text-xl font-bold text-gray-400">
+        <h3 className="md:text-xl font-bold text-gray-400">
           {currentDate.toLocaleDateString("en", {
             month: "long",
             year: "numeric",
@@ -86,7 +86,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-2 my-4 rounded-xl">
+      <div className="hidden md:grid grid-cols-7 gap-2 my-4 rounded-xl">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
           <div
             key={day}

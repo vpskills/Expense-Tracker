@@ -91,8 +91,8 @@ const AddExpenses = ({ selectedDate }) => {
   };
 
   return (
-    <div className="bg-neutral-950 border border-neutral-800 p-5 rounded-2xl mt-2 text-gray-400">
-      <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+    <div className="bg-neutral-950 z-40 border border-neutral-800 w-full p-5 rounded-2xl md:mt-2 text-gray-400">
+      <h2 className="md:text-2xl font-bold mb-6 flex items-center gap-3">
         <Plus strokeWidth={3} className="mb-1" /> Add Expense
       </h2>
 
@@ -124,7 +124,7 @@ const AddExpenses = ({ selectedDate }) => {
         <button
           onClick={handleAddExpense}
           disabled={isPending || !isToday(selectedDate)}
-          className="w-full bg-emerald-600 text-white font-semibold mt-3 py-3 px-6 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
+          className="w-full bg-emerald-600 text-white font-semibold mt-3 py-3 px-6 md:rounded-lg rounded-md hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
         >
           Add Expense
         </button>

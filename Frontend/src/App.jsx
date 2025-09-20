@@ -7,15 +7,14 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-svh text-gray-400 bg-neutral-900">
+      <div className="flex items-center justify-center min-h-screen text-gray-400 bg-neutral-900">
         Checking session...
       </div>
     );
   }
-  
+
   return (
-    // <ExpenseTracker/>
-    <div className="bg-neutral-900 h-svh overflow-auto">
+    <div className="bg-neutral-900 h-screen overflow-y-auto overflow-x-hidden">
       <Toaster />
       <Outlet />
     </div>

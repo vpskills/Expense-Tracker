@@ -2,9 +2,11 @@ import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/
 import { deleteExpense, fetchExpensesByDate } from '../store/actions/expenses.actions';
 import CustomLoader from './CustomLoader';
 import { useEffect } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Loader, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { formatDisplayDate } from '../utils';
+import { FadeLoader } from 'react-spinners';
+import { isMobile } from 'react-device-detect';
 
 const ListExpenses = ({ selectedDate }) => {
   const queryClient = useQueryClient();
@@ -42,7 +44,7 @@ const ListExpenses = ({ selectedDate }) => {
       return { previousExpenses, queryKey };
     },
     onSuccess: (data) => {
-      toast.success(data?.message || "Expense deleted successfully")
+      toast.success(data?.message || 'Expense deleted successfully');
     },
     onError: (error, _, context) => {
       toast.error('Error in deleting expense');
@@ -63,13 +65,13 @@ const ListExpenses = ({ selectedDate }) => {
   if (isLoading) return <CustomLoader />;
 
   return (
-    <div className="p-5 h-full flex flex-col">
-      <div className="mb-6">
+    <div className="p-2 md:p-5 h-svh md:h-full flex flex-col">
+      <div className="p-3 py-5 md:p-0 md:mb-6">
         <div className="flex text-neutral-300 justify-between mb-2">
-          <h2 className="text-2xl font-bold">📋 Today's Expenses</h2>
-          <div className="text-2xl font-semibold">- ₹{getTotalAmount().toFixed(2)}</div>
+          <h2 className="text-lg md:text-2xl font-bold">📋 Today's Expenses</h2>
+          <div className="md:text-2xl font-semibold">- ₹{getTotalAmount().toFixed(2)}</div>
         </div>
-        <div className="font text-rose-400 font-semibold p-2">
+        <div className="text-sm md:text-md text-rose-400 font-semibold p-2">
           {formatDisplayDate(selectedDate)}
         </div>
       </div>
@@ -84,17 +86,23 @@ const ListExpenses = ({ selectedDate }) => {
           data.expenses.map((expense) => (
             <div
               key={expense.id}
-              className="flex items-center gap-4 justify-between p-4 rounded-xl transition-all duration-200 border border-neutral-800"
+              className="flex items-center gap-2 justify-between p-4 rounded-xl transition-all duration-200 border border-neutral-800"
             >
-              <div className="flex-1 break-all">
-                <div className="font-semibold mb-1">{expense.description || 'No description'}</div>
-                <div className="text-xs text-emerald-400 font-semibold py-1 rounded-full inline-block">
-                  {expense?.category?.emoji} {expense?.category?.label}
-                </div>
+              <div className="flex-1 whitespace-pre-wrap">
+                <div className="text-xs md:text-sm mb-1 font-semibold font-mon mr-2">{expense.description || 'No description'}</div>
+                {
+                  <div className={`text-[12px] md:text-xs text-emerald-500 font-semibold inline-block`}>
+                    {isAnyExpenseMutating && !expense?.category ? (
+                      <h1 className="h-3 max-w-24 rounded-md bg-neutral-600 animate-pulse">&nbsp;</h1>
+                    ) : (
+                      expense?.category && `${expense?.category?.emoji} ${expense?.category?.label}`
+                    )}
+                  </div>
+                }
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="text-xl font-bold text-red-600">- ₹{expense.amount.toFixed(2)}</div>
+                <div className="text-sm md:text-lg font-bold text-red-600">₹{expense.amount.toFixed(2)}</div>
               </div>
 
               {/* delete expense */}
@@ -103,7 +111,7 @@ const ListExpenses = ({ selectedDate }) => {
                 disabled={isAnyExpenseMutating}
                 className="rounded-full p-2 text-neutral-500 hover:text-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Trash2 />
+                <Trash2 size={20} />
               </button>
             </div>
           ))
