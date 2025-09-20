@@ -7,7 +7,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-svh text-gray-400">
+      <div className="flex items-center justify-center min-h-svh text-gray-400 bg-neutral-900">
         Checking session...
       </div>
     );
@@ -15,7 +15,7 @@ function App() {
   
   return (
     // <ExpenseTracker/>
-    <div className="bg-neutral-900 min-h-svh">
+    <div className="bg-neutral-900 h-svh overflow-auto">
       <Toaster />
       <Outlet />
     </div>

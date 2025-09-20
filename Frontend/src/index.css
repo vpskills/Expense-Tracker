@@ -3,3 +3,8 @@
 .custom-scroll::-webkit-scrollbar {
   display: none;
 }
+
+body {
+  /* font-family: "Nunito", sans-serif; */
+  font-family: "Roboto Mono", monospace;
+}

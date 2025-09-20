@@ -2,7 +2,7 @@ export const ExpensesEndPoints = {
   GetExpense: (date) => `api/v1/expenses/get?date=${date}`,
   AddExpense: 'api/v1/expenses/add',
   UpdateExpense: 'url',
-  DelteExpense: 'url',
+  DeleteExpense: (id) => `api/v1/expenses/delete?id=${id}`,
 };
 
 export const AuthEndPoints = {

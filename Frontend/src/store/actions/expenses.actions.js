@@ -17,3 +17,11 @@ export const addExpense = async (expense) => {
   };
   return await API(obj);
 };
+
+export const deleteExpense = async (id) => {
+  const obj = {
+    url: `${ExpensesEndPoints.DeleteExpense(id)}`,
+    method: 'DELETE',
+  }
+  return await API(obj);
+}

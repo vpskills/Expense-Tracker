@@ -4,14 +4,15 @@ import { formatDate, isToday } from '../utils';
 import InputField from '../ui/InputField';
 import SelectField from '../ui/SelectField';
 import { addExpense } from '../store/actions/expenses.actions';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchCategories } from '../store/actions/categories.actions';
 import toast from 'react-hot-toast';
 
-const AddExpenses = ({ selectedDate, setExpensesAdded }) => {
+const AddExpenses = ({ selectedDate }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ['categories', { page: 1, limit: 20 }],
@@ -23,17 +24,54 @@ const AddExpenses = ({ selectedDate, setExpensesAdded }) => {
 
   // Mutation for adding expense
   const { mutate: addExpenseMutation, isPending } = useMutation({
+    mutationKey: ['expenses', selectedDate],
     mutationFn: addExpense,
-    onSuccess: (expenseData) => {
-      toast.success(expenseData?.message || 'Expense added successfully!');
+    onMutate: async (newExpense) => {
+      const queryKey = ['expenses', selectedDate];
+      await queryClient.cancelQueries({ queryKey });
+      const previousExpenses = queryClient.getQueryData(queryKey);
+      const fakeId = Math.random().toString();
+
+      queryClient.setQueryData(queryKey, (old) => {
+        if (!old) {
+          return {
+            message: 'Expenses fetched successfully',
+            expenses: [{ ...newExpense, id: fakeId }],
+          };
+        }
+        return {
+          ...old,
+          expenses: [{ ...newExpense, id: fakeId }, ...old.expenses],
+        };
+      });
+
+      return { previousExpenses, fakeId, queryKey };
+    },
+
+    onError: (err, newExpense, context) => {
+      console.error(err);
+      if (context?.previousExpenses) {
+        queryClient.setQueryData(context.queryKey, context.previousExpenses);
+      }
+      toast.error('Adding expense failed!');
+    },
+
+    // Replace old expense object with fake id, by new expense object we get from server.
+    onSuccess: (data, _, context) => {
+      queryClient.setQueryData(context?.queryKey, (old) => {
+        if (!old) return data;
+        return {
+          ...old,
+          expenses: old.expenses.map((exp) => (exp.id === context?.fakeId ? data.expense : exp)),
+        };
+      });
       setDescription('');
       setAmount('');
       setSelectedCategory('');
-      setExpensesAdded(true);
     },
-    onError: (error) => {
-      toast.error(error.message || 'Adding Expense Failed!');
-      setExpensesAdded(false);
+
+    onSettled: (_, __, ___, context) => {
+      queryClient.invalidateQueries({ queryKey: context?.queryKey });
     },
   });
 
@@ -42,7 +80,7 @@ const AddExpenses = ({ selectedDate, setExpensesAdded }) => {
       toast.error('Please enter a valid amount');
       return;
     }
-     const formattedDate = formatDate(selectedDate);
+    const formattedDate = formatDate(selectedDate);
     const newExpenseData = {
       amount: parseFloat(amount),
       description: description?.trim() || null,
@@ -53,7 +91,7 @@ const AddExpenses = ({ selectedDate, setExpensesAdded }) => {
   };
 
   return (
-    <div className="bg-neutral-950 p-5 rounded-2xl mt-2 text-gray-400">
+    <div className="bg-neutral-950 border border-neutral-800 p-5 rounded-2xl mt-2 text-gray-400">
       <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
         <Plus strokeWidth={3} className="mb-1" /> Add Expense
       </h2>

@@ -12,8 +12,18 @@ export const isFutureDate = (dayObj) => {
 
 export const isToday = (date) => {
   const today = new Date();
-  today.setHours(0, 0, 0, 0);  // reset time to 00:00
+  today.setHours(0, 0, 0, 0); // reset time to 00:00
   const compareDate = new Date(date);
   compareDate.setHours(0, 0, 0, 0); // reset time to 00:00
   return compareDate.getTime() === today.getTime();
 };
+
+export function formatDisplayDate(date) {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}

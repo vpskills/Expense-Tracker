@@ -62,12 +62,12 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   };
 
   return (
-    <div className="bg-neutral-950 p-2 rounded-2xl">
+    <div className="bg-neutral-950 p-2 rounded-2xl border border-neutral-800">
       {/* Calendar Header */}
-      <div className="flex justify-between items-center border border-neutral-700 rounded-xl p-2 bg-neutral-900 mx-auto">
+      <div className="flex justify-between items-center border border-neutral-800 rounded-xl p-2 bg-neutral-900 mx-auto">
         <button
           onClick={() => navigateMonth(-1)}
-          className="bg-neutral-600 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
+          className="bg-neutral-800 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
         >
           <ChevronLeft />
         </button>
@@ -79,7 +79,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         </h3>
         <button
           onClick={() => navigateMonth(1)}
-          className="bg-neutral-600 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
+          className="bg-neutral-800 hover:bg-neutral-500 text-gray-400 p-2 rounded-lg font-semibold transition-all"
         >
           <ChevronRight />
         </button>
@@ -99,11 +99,11 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
           <div
             key={index}
             onClick={() => !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date))}
-            className={`py-3 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl
-            ${dayObj.isCurrentMonth ? 'bg-neutral-800 text-gray-400 hover:bg-gray-900' : 'bg-gray-950 text-gray-600 hover:bg-gray-900'}
+            className={`py-3 border border-neutral-800 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl
+            ${dayObj.isCurrentMonth ? 'bg-neutral-900 text-gray-400 hover:bg-neutral-800' : 'text-gray-600 hover:bg-gray-900'}
             ${isDateSelected(new Date(dayObj.date)) ? 'bg-rose-500 text-white hover:bg-rose-500' : ''}
             ${dayObj.isToday && !isDateSelected(new Date(dayObj.date))? 'ring-2 ring-rose-700 bg-rose-950': ''}
-            ${isFutureDate(dayObj)? 'bg-gray-800 text-gray-700 cursor-not-allowed': 'cursor-pointer'}
+            ${isFutureDate(dayObj)? 'cursor-not-allowed': 'cursor-pointer'}
           `}
           >
             {dayObj.day}
