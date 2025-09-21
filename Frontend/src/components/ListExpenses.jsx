@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { formatDisplayDate } from '../utils';
 import { FadeLoader } from 'react-spinners';
 import { isMobile } from 'react-device-detect';
+import Skeleton from './Skeleton';
 
 const ListExpenses = ({ selectedDate }) => {
   const queryClient = useQueryClient();
@@ -67,9 +68,11 @@ const ListExpenses = ({ selectedDate }) => {
   return (
     <div className="p-2 md:p-5 h-svh md:h-full flex flex-col">
       <div className="p-3 py-5 md:p-0 md:mb-6">
-        <div className="flex text-neutral-300 justify-between mb-2">
-          <h2 className="text-lg md:text-2xl font-bold">📋 Today's Expenses</h2>
-          <div className="md:text-2xl font-semibold">- ₹{getTotalAmount().toFixed(2)}</div>
+        <div className="flex items-center text-neutral-300 justify-between mb-2">
+          <h2 className="text-lg md:text-2xl font-bold">📋 Expenses</h2>
+          <div className="md:text-2xl font-semibold wrap-anywhere whitespace-nowrap">
+            - ₹{getTotalAmount().toFixed(2)}
+          </div>
         </div>
         <div className="text-sm md:text-md text-rose-400 font-semibold p-2">
           {formatDisplayDate(selectedDate)}
@@ -86,33 +89,36 @@ const ListExpenses = ({ selectedDate }) => {
           data.expenses.map((expense) => (
             <div
               key={expense.id}
-              className="flex items-center gap-2 justify-between p-4 rounded-xl transition-all duration-200 border border-neutral-800"
+              className="flex flex-col gap-2 p-2 rounded-xl transition-all duration-200 border border-neutral-800"
             >
-              <div className="flex-1 whitespace-pre-wrap">
-                <div className="text-xs md:text-sm mb-1 font-semibold font-mon mr-2">{expense.description || 'No description'}</div>
-                {
+              <div className="flex justify-between">
+                <div className="p-2">
+                  <div className="text-xs md:text-sm mb-1 font-semibold font-mon mr-2 whitespace-pre-wrap ">
+                    {expense.description || 'No description'}
+                  </div>
+                  <div className="py-2">
+                    <div className="text-sm md:text-lg font-bold text-rose-500 wrap-anywhere whitespace-nowrap">
+                      ₹{expense.amount.toFixed(2)}
+                    </div>
+                  </div>
                   <div className={`text-[12px] md:text-xs text-emerald-500 font-semibold inline-block`}>
-                    {isAnyExpenseMutating && expense?.category===undefined ? (
-                      <h1 className="h-3 min-w-24 rounded-md bg-neutral-600 animate-pulse transition-all">&nbsp;</h1>
+                    {isAnyExpenseMutating && expense?.category === undefined ? (
+                      <Skeleton />
                     ) : (
                       expense?.category && `${expense?.category?.emoji} ${expense?.category?.label}`
                     )}
                   </div>
-                }
-              </div>
+                </div>
 
-              <div className="flex items-center gap-3">
-                <div className="text-sm md:text-lg font-bold text-red-600">₹{expense.amount.toFixed(2)}</div>
+                {/* delete expense */}
+                <button
+                  onClick={() => deleteExpenseHandler(expense.id)}
+                  disabled={isAnyExpenseMutating}
+                  className="rounded-full p-2 text-neutral-500 hover:text-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Trash2 size={20} />
+                </button>
               </div>
-
-              {/* delete expense */}
-              <button
-                onClick={() => deleteExpenseHandler(expense.id)}
-                disabled={isAnyExpenseMutating}
-                className="rounded-full p-2 text-neutral-500 hover:text-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Trash2 size={20} />
-              </button>
             </div>
           ))
         )}
