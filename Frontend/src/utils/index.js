@@ -27,3 +27,11 @@ export function formatDisplayDate(date) {
     day: 'numeric',
   });
 }
+
+export const formatCurrency = (value, sign=true) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    signDisplay: sign ? 'exceptZero' : 'never', // shows + / - correctly
+  }).format(value);
+};

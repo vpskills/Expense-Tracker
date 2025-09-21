@@ -15,7 +15,7 @@ const SelectField = ({
       <select
         value={value}
         onChange={onChange}
-        className="w-full text-sm md:text-md p-3 md:rounded-lg rounded-md border-2 border-neutral-800 bg-neutral-900 font-medium outline-none transition-all duration-200"
+        className="w-full font-mon text-sm md:text-md p-3 md:rounded-lg rounded-md border-2 border-neutral-800 bg-neutral-900 font-semibold outline-none transition-all duration-200"
         {...props}
       >
         <option value="" disabled>
@@ -23,7 +23,7 @@ const SelectField = ({
         </option>
 
         {options.map((option) => (
-          <option key={option.id || option.value} value={option.id || option.value}>
+          <option key={option.id || option.value} value={option.id || option.value} className="font-semibold font-mon ">
             {isLoading
               ? 'loading...'
               : option.emoji

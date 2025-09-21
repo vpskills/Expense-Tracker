@@ -15,7 +15,15 @@ function App() {
 
   return (
     <div className="bg-neutral-900 h-screen overflow-y-auto overflow-x-hidden">
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: {
+            fontFamily: 'Montserrat',
+            fontWeight: '500',
+            fontSize: '14px'
+          },
+        }}
+      />
       <Outlet />
     </div>
   );

@@ -1,10 +1,10 @@
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteExpense, fetchExpensesByDate } from '../store/actions/expenses.actions';
 import CustomLoader from './CustomLoader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { formatDisplayDate } from '../utils';
+import { formatCurrency, formatDisplayDate } from '../utils';
 import { FadeLoader } from 'react-spinners';
 import { isMobile } from 'react-device-detect';
 import Skeleton from './Skeleton';
@@ -22,7 +22,19 @@ const ListExpenses = ({ selectedDate }) => {
 
   function getTotalAmount() {
     const dayExpenses = data?.expenses || [];
-    return dayExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+
+    return dayExpenses.reduce(
+      (acc, expense) => {
+        if (expense?.isExpense) {
+          acc.total -= expense.amount;
+          acc.expense += expense.amount;
+        } else {
+          acc.total += expense.amount;
+        }
+        return acc;
+      },
+      { total: 0, expense: 0 }
+    );
   }
 
   //delete single expense by id
@@ -67,11 +79,14 @@ const ListExpenses = ({ selectedDate }) => {
 
   return (
     <div className="p-2 md:p-5 h-svh md:h-full flex flex-col">
-      <div className="p-3 py-5 md:p-0 md:mb-6">
-        <div className="flex items-center text-neutral-300 justify-between mb-2">
-          <h2 className="text-lg md:text-2xl font-bold">📋 Expenses</h2>
-          <div className="md:text-2xl font-semibold wrap-anywhere whitespace-nowrap">
-            - ₹{getTotalAmount().toFixed(2)}
+      <div className=" md:p-0 mb-6">
+        <div className="flex border border-neutral-800 rounded-md p-2 bg-neutral-900 text-neutral-300 justify-between mb-2">
+          <h2 className="text-lg md:text-2xl font-bold">📋Expenses</h2>
+          <div className="text-lg md:text-2xl font-semibold wrap-anywhere whitespace-nowrap">
+            {formatCurrency(getTotalAmount().total, true)}
+            <div className='text-red-400 text-sm md:text-lg text-end mt-1'>
+              -{formatCurrency(getTotalAmount().expense, false)}
+            </div>
           </div>
         </div>
         <div className="text-sm md:text-md text-rose-400 font-semibold p-2">
@@ -97,11 +112,19 @@ const ListExpenses = ({ selectedDate }) => {
                     {expense.description || 'No description'}
                   </div>
                   <div className="py-2">
-                    <div className="text-sm md:text-lg font-bold text-rose-500 wrap-anywhere whitespace-nowrap">
-                      ₹{expense.amount.toFixed(2)}
+                    <div
+                      className={`text-sm md:text-lg font-bold ${
+                        expense?.isExpense ? 'text-rose-500' : 'text-emerald-500'
+                      } wrap-anywhere whitespace-nowrap`}
+                    >
+                      {expense?.isExpense
+                        ? '-₹' + expense.amount.toFixed(2)
+                        : '+₹' + expense.amount.toFixed(2)}
                     </div>
                   </div>
-                  <div className={`text-[12px] md:text-xs text-emerald-500 font-semibold inline-block`}>
+                  <div
+                    className={`text-[12px] md:text-xs text-emerald-500 font-semibold inline-block`}
+                  >
                     {isAnyExpenseMutating && expense?.category === undefined ? (
                       <Skeleton />
                     ) : (

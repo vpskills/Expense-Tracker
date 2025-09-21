@@ -6,7 +6,7 @@ import { ApiError } from '../../utils/ApiError.js';
 const prisma = new PrismaClient();
 
 export const addExpense = async (req: AuthRequest, res: Response) => {
-  const { amount, description, categoryId, date } = req.body;
+  const { amount, description, categoryId, date, isExpense } = req.body;
 
   if (!amount || !date) {
     throw new ApiError('All fields are required', 400);
@@ -22,6 +22,7 @@ export const addExpense = async (req: AuthRequest, res: Response) => {
       date: formattedDate || "",
       userId: req.user!.id,
       categoryId: categoryId || null,
+      isExpense: isExpense
     },
     include: { category: true },
   });

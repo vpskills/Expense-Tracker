@@ -1,13 +1,14 @@
-import { forwardRef } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { forwardRef } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const InputField = forwardRef(
   (
     {
-      type = "text",
+      label = '',
+      type = 'text',
       placeholder,
       icon: Icon,
-      className = "",
+      className = '',
       showPasswordToggle = false,
       onTogglePassword,
       showPassword = false,
@@ -22,12 +23,15 @@ const InputField = forwardRef(
             <Icon className="h-5 w-5 text-gray-400" />
           </div>
         )}
+
+        {label && <label className="block text-sm font-semibold mb-2">{label}</label>}
+
         <input
           type={type}
           placeholder={placeholder}
           ref={ref}
           className={`block w-full ${
-            Icon ? "pl-10" : "pl-3"
+            Icon ? 'pl-10' : 'pl-3'
           } w-full text-sm md:text-md px-4 py-3 outline-none border text-gray-400 bg-neutral-900 border-neutral-800 md:rounded-lg rounded-md focus:ring-4 focus:ring-gray-600 transition-all ${className}`}
           {...props}
         />
@@ -50,4 +54,3 @@ const InputField = forwardRef(
 );
 
 export default InputField;
-

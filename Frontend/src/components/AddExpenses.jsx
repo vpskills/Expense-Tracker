@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Minus, Plus, RefreshCw } from 'lucide-react';
 import { useState } from 'react';
 import { formatDate, isToday } from '../utils';
 import InputField from '../ui/InputField';
@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 const AddExpenses = ({ selectedDate, setFormVisible }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [isExpenseForm, setIsExpenseForm] = useState(true);
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const queryClient = useQueryClient();
@@ -44,7 +45,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
           expenses: [{ ...newExpense, id: fakeId }, ...old.expenses],
         };
       });
-      setFormVisible((prev)=>!prev);
+      setFormVisible((prev) => !prev);
       return { previousExpenses, fakeId, queryKey };
     },
 
@@ -86,15 +87,24 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
       description: description?.trim() || null,
       categoryId: selectedCategory || null,
       date: formattedDate,
+      isExpense: isExpenseForm,
     };
     addExpenseMutation(newExpenseData);
   };
 
   return (
     <div className="bg-neutral-950 z-40 border border-neutral-800 w-full p-5 rounded-2xl md:mt-2 text-gray-400">
-      <h2 className="md:text-2xl font-bold mb-6 flex items-center gap-3">
-        <Plus strokeWidth={3} className="mb-1" /> Add Expense
-      </h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="md:text-xl font-bold flex items-center gap-3">
+          <Plus className={`${isExpenseForm ? 'text-rose-500' : 'text-emerald-500'}`} />
+          {isExpenseForm ? 'Add Expense' : 'Add Received/Surplus'}
+        </h2>
+
+        <RefreshCw
+          className={`${isExpenseForm && 'rotate-180'}  cursor-pointer hover:text-neutral-100 transition-all duration-500`}
+          onClick={() => setIsExpenseForm(!isExpenseForm)}
+        />
+      </div>
 
       <div className="space-y-4">
         <InputField

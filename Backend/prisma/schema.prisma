@@ -39,5 +39,6 @@ model Expense {
   userId      String
   category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String?
+  isExpense   Boolean @default(true)
   createdAt   DateTime @default(now())
 }
