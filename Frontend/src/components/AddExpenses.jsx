@@ -1,6 +1,6 @@
 import { Minus, Plus, RefreshCw } from 'lucide-react';
 import { useState } from 'react';
-import { formatDate, isToday } from '../utils';
+import { formatDate, isFutureDate, isToday } from '../utils';
 import InputField from '../ui/InputField';
 import SelectField from '../ui/SelectField';
 import { addExpense } from '../store/actions/expenses.actions';
@@ -101,6 +101,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
         </h2>
 
         <RefreshCw
+          size={20}
           className={`${isExpenseForm && 'rotate-180'}  cursor-pointer hover:text-neutral-100 transition-all duration-500`}
           onClick={() => setIsExpenseForm(!isExpenseForm)}
         />
@@ -110,7 +111,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
         <InputField
           label="Description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))}
           placeholder="What did you spend on?"
         />
 
@@ -122,18 +123,18 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
           placeholder="Enter amount"
         />
 
-        <SelectField
+        {/* <SelectField
           label="Category"
           isLoading={isLoading}
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
           options={categories}
           placeholder="Select a category"
-        />
+        /> */}
 
         <button
           onClick={handleAddExpense}
-          disabled={isPending || !isToday(selectedDate)}
+          disabled={isPending || isFutureDate(selectedDate)}
           className="w-full bg-emerald-600 text-white font-semibold mt-3 py-3 px-6 md:rounded-lg rounded-md hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
         >
           Add Expense

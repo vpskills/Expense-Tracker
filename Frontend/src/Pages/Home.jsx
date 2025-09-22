@@ -3,7 +3,7 @@ import Calendar from '../components/Calendar';
 import AddExpenses from '../components/AddExpenses';
 import ListExpenses from '../components/ListExpenses';
 import { Plus } from 'lucide-react';
-import { isToday } from '../utils';
+import { isFutureDate, isToday } from '../utils';
 
 const Home = () => {
   const [expensesAdded, setExpensesAdded] = useState(false);
@@ -27,7 +27,7 @@ const Home = () => {
         <ListExpenses selectedDate={selectedDate} expensesAdded={expensesAdded}/>
       </div>
 
-      {isToday(selectedDate)&&<div
+      {!isFutureDate(selectedDate)&&<div
         onClick={() => setFormVisible(!formVisible)}
         className="flex md:hidden fixed bottom-0 inset-x-0 pb-4 justify-center items-center z-20"
       >

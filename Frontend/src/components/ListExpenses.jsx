@@ -30,10 +30,11 @@ const ListExpenses = ({ selectedDate }) => {
           acc.expense += expense.amount;
         } else {
           acc.total += expense.amount;
+          acc.income += expense.amount;
         }
         return acc;
       },
-      { total: 0, expense: 0 }
+      { total: 0, expense: 0, income: 0}
     );
   }
 
@@ -78,25 +79,38 @@ const ListExpenses = ({ selectedDate }) => {
   if (isLoading) return <CustomLoader />;
 
   return (
-    <div className="p-2 md:p-5 h-svh md:h-full flex flex-col">
-      <div className=" md:p-0 mb-6">
-        <div className="flex border border-neutral-800 rounded-md p-2 bg-neutral-900 text-neutral-300 justify-between mb-2">
-          <h2 className="text-lg md:text-2xl font-bold">📋Expenses</h2>
-          <div className="text-lg md:text-2xl font-semibold wrap-anywhere whitespace-nowrap">
-            {formatCurrency(getTotalAmount().total, true)}
-            <div className='text-red-400 text-sm md:text-lg text-end mt-1'>
+    <div className="md:p-5 h-svh md:h-full flex flex-col">
+      <div className="md:p-0 md:mb-6 p-3">
+        <div className="flex flex-col gap-3 md:gap-2 border border-neutral-700 rounded-md p-4 bg-neutral-900 overflow-x-auto mb-2">
+          <div className="flex justify-between text-neutral-400">
+            <span className='text-sm md:text-lg'>Income</span>
+            <span className="text-emerald-500 text-sm font-semibold md:text-lg">
+              {formatCurrency(getTotalAmount().income, true)}
+            </span>
+          </div>
+          <div className="flex justify-between text-neutral-400">
+            <span className='text-sm md:text-lg'>Spent</span>
+            <span className="text-red-400 text-sm font-semibold md:text-lg">
               -{formatCurrency(getTotalAmount().expense, false)}
-            </div>
+            </span>
+          </div>
+          <div className="flex justify-between text-neutral-400">
+            <span className='text-sm md:text-lg'>Total</span>
+            <span className="text-sm font-semibold md:text-lg">
+              {formatCurrency(getTotalAmount().total, true)}
+            </span>
           </div>
         </div>
-        <div className="text-sm md:text-md text-rose-400 font-semibold p-2">
-          {formatDisplayDate(selectedDate)}
-        </div>
+        {!isMobile && (
+           <div className="text-sm md:text-md text-neutral-500 font-semibold p-2">
+            {formatDisplayDate(selectedDate)}
+          </div>
+        )}
       </div>
 
-      <div className="grow custom-scroll overflow-y-auto space-y-3">
+      <div className="grow custom-scroll overflow-y-auto md:space-y-3">
         {!data?.expenses?.length ? (
-          <div className="text-center text-gray-500 py-12 italic">
+          <div className="text-center flex items-center flex-col justify-center h-[70%] text-gray-500 py-12 italic">
             <div className="text-4xl mb-4">📝</div>
             No expenses recorded for this date
           </div>
@@ -104,17 +118,19 @@ const ListExpenses = ({ selectedDate }) => {
           data.expenses.map((expense) => (
             <div
               key={expense.id}
-              className="flex flex-col gap-2 p-2 rounded-xl transition-all duration-200 border border-neutral-800"
+              className="flex flex-col gap-2 p-2 md:rounded-xl transition-all duration-200 border border-neutral-800"
             >
               <div className="flex justify-between">
                 <div className="p-2">
-                  <div className="text-xs md:text-sm mb-1 font-semibold font-mon mr-2 whitespace-pre-wrap ">
+                  <div className="text-sm mb-1 font-semibold font-mon mr-2 whitespace-pre-wrap ">
                     {expense.description || 'No description'}
                   </div>
-                  <div className="py-2">
+                  
+                  {/* Ammount Section */}
+                  <div className="pt-2">
                     <div
-                      className={`text-sm md:text-lg font-bold ${
-                        expense?.isExpense ? 'text-rose-500' : 'text-emerald-500'
+                      className={`text-sm md:text-lg font-semibold ${
+                        expense?.isExpense ? 'text-red-400' : 'text-emerald-400'
                       } wrap-anywhere whitespace-nowrap`}
                     >
                       {expense?.isExpense
@@ -122,7 +138,9 @@ const ListExpenses = ({ selectedDate }) => {
                         : '+₹' + expense.amount.toFixed(2)}
                     </div>
                   </div>
-                  <div
+
+                  {/* Category Section */}
+                  {/* <div
                     className={`text-[12px] md:text-xs text-emerald-500 font-semibold inline-block`}
                   >
                     {isAnyExpenseMutating && expense?.category === undefined ? (
@@ -130,7 +148,7 @@ const ListExpenses = ({ selectedDate }) => {
                     ) : (
                       expense?.category && `${expense?.category?.emoji} ${expense?.category?.label}`
                     )}
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* delete expense */}

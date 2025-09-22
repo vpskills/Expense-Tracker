@@ -6,7 +6,7 @@ const Skeleton = ({ h = '3', w = '24', lines = 1, gap="2"}) => {
       {Array.from({ length: lines }).map((_, index) => (
         <h1
           key={index}
-          className={`h-${h} w-${w} min-w-24 rounded-md bg-neutral-600 animate-pulse transition-all`}
+          className={`h-${h} w-${w} min-w-24 rounded-full bg-neutral-600 animate-pulse transition-all`}
         >
           &nbsp;
         </h1>

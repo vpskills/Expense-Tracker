@@ -20,9 +20,8 @@ export const isToday = (date) => {
 
 export function formatDisplayDate(date) {
   if (!date) return '';
-  return new Date(date).toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
+  return new Date(date).toLocaleDateString('en-CA', {
+    weekday: 'long', 
     month: 'long',
     day: 'numeric',
   });
