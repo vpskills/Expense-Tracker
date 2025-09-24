@@ -42,47 +42,45 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto pt-32">
-      <div className="border border-neutral-700 rounded-2xl p-8 sm:p-10">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-400">Welcome Back</h1>
-          <p className="text-gray-500 mt-2">
-            Sign in to your account or{' '}
-            <Link to="/signup" className="text-blue-600 hover:underline">
-              signup
-            </Link>
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <InputField
-            type="email"
-            placeholder="you@example.com"
-            icon={Mail}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-          />
-
-          <InputField
-            type={showPassword ? 'text' : 'password'}
-            placeholder="••••••••"
-            icon={Lock}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="current-password"
-            showPasswordToggle={true}
-            showPassword={showPassword}
-            onTogglePassword={() => setShowPassword(!showPassword)}
-          />
-
-          <Button type="submit" isLoading={isPending}>
-            Sign in
-          </Button>
-        </form>
+    <div className="md:border min-w-md border-neutral-700 md:rounded-2xl p-12 md:p-8 sm:p-10">
+      <div className="text-center mb-8">
+        <h1 className="text-2xl font-bold text-neutral-400">Welcome Back</h1>
+        <p className="text-gray-500 mt-2">
+          Sign in to your account or{' '}
+          <Link to="/signup" className="text-pink-600 font-semibold hover:underline">
+            signup
+          </Link>
+        </p>
       </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <InputField
+          type="email"
+          placeholder="you@example.com"
+          icon={Mail}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          autoComplete="email"
+        />
+
+        <InputField
+          type={showPassword ? 'text' : 'password'}
+          placeholder="••••••••"
+          icon={Lock}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoComplete="current-password"
+          showPasswordToggle={true}
+          showPassword={showPassword}
+          onTogglePassword={() => setShowPassword(!showPassword)}
+        />
+
+        <Button type="submit" isLoading={isPending}>
+          Sign in
+        </Button>
+      </form>
     </div>
   );
 }

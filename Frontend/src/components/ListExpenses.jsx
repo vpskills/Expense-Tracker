@@ -17,6 +17,7 @@ const ListExpenses = ({ selectedDate }) => {
   const { data, isLoading } = useQuery({
     queryKey: ['expenses', selectedDate],
     queryFn: () => fetchExpensesByDate(selectedDate),
+    refetchOnWindowFocus: false,
     enabled: !!selectedDate,
   });
 

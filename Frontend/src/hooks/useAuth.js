@@ -10,6 +10,7 @@ export function useAuth() {
   const query = useQuery({
     queryKey: ['currentUser'],
     queryFn: getCurrentUser,
+    refetchOnWindowFocus: false,
   });
 
   // handle side effects in useEffect
@@ -29,6 +30,8 @@ export function useAuth() {
       dispatch(logout());
     }
   }, [query.isError, query.error, dispatch]);
+
+  
 
   return query;
 }

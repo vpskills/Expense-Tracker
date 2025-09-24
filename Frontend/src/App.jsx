@@ -1,14 +1,16 @@
 import { Toaster } from 'react-hot-toast';
 import { useAuth } from './hooks/useAuth';
 import { Outlet } from 'react-router-dom';
+import { CircleLoader } from 'react-spinners';
 
 function App() {
   const { isLoading, data, error } = useAuth();
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-gray-400 bg-neutral-900">
-        Checking session...
+      <div className="flex flex-col gap-4 items-center justify-center min-h-screen text-gray-400 bg-neutral-900">
+        <CircleLoader color='white'/>
+        <h2>Checking session</h2>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { Minus, Plus, RefreshCw } from 'lucide-react';
+import { ArrowRightLeft, ArrowRightLeftIcon, Minus, Plus, RefreshCw } from 'lucide-react';
 import { useState } from 'react';
 import { formatDate, isFutureDate, isToday } from '../utils';
 import InputField from '../ui/InputField';
@@ -7,6 +7,7 @@ import { addExpense } from '../store/actions/expenses.actions';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchCategories } from '../store/actions/categories.actions';
 import toast from 'react-hot-toast';
+import { isMobile } from 'react-device-detect';
 
 const AddExpenses = ({ selectedDate, setFormVisible }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -15,13 +16,13 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
   const [amount, setAmount] = useState('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['categories', { page: 1, limit: 20 }],
-    queryFn: () => fetchCategories({ page: 1, limit: 20 }),
-    keepPreviousData: true, // for smoother pagination
-  });
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ['categories', { page: 1, limit: 20 }],
+  //   queryFn: () => fetchCategories({ page: 1, limit: 20 }),
+  //   keepPreviousData: true, // for smoother pagination
+  // });
 
-  const categories = data?.data || [];
+  // const categories = data?.data || [];
 
   // Mutation for adding expense
   const { mutate: addExpenseMutation, isPending } = useMutation({
@@ -94,24 +95,30 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
 
   return (
     <div className="bg-neutral-950 z-40 border border-neutral-800 w-full p-5 rounded-2xl md:mt-2 text-gray-400">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="md:text-xl font-bold flex items-center gap-3">
-          <Plus className={`${isExpenseForm ? 'text-rose-500' : 'text-emerald-500'}`} />
-          {isExpenseForm ? 'Add Expense' : 'Add Received/Surplus'}
+      <div className="flex border border-neutral-800 rounded-full overflow-hidden justify-between items-center mb-6">
+        <h2
+          onClick={() => setIsExpenseForm(true)}
+          className={`flex-1 ${isExpenseForm && "bg-neutral-800"} cursor-pointer border-r p-2 px-4 border-neutral-700 hover:text-gray-300  md:text-xl font-bold flex items-center gap-2`}
+        >
+          <Plus className={'text-rose-500'} />
+          Expense
         </h2>
-
-        <RefreshCw
-          size={20}
-          className={`${isExpenseForm && 'rotate-180'}  cursor-pointer hover:text-neutral-100 transition-all duration-500`}
-          onClick={() => setIsExpenseForm(!isExpenseForm)}
-        />
+        <h2
+          onClick={() => setIsExpenseForm(false)}
+          className={`flex-1 ${!isExpenseForm && "bg-neutral-800"} cursor-pointer hover:text-gray-300 p-2 px-4 md:text-xl font-bold flex items-center gap-2 justify-end`}
+        >
+          <Plus className="text-emerald-500" />
+          Received
+        </h2>
       </div>
 
       <div className="space-y-4">
         <InputField
           label="Description"
           value={description}
-          onChange={(e) => setDescription(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))}
+          onChange={(e) =>
+            setDescription(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
+          }
           placeholder="What did you spend on?"
         />
 
@@ -135,9 +142,11 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
         <button
           onClick={handleAddExpense}
           disabled={isPending || isFutureDate(selectedDate)}
-          className="w-full bg-emerald-600 text-white font-semibold mt-3 py-3 px-6 md:rounded-lg rounded-md hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50"
+          className={`w-full ${
+            isExpenseForm ? 'bg-rose-700' : 'bg-emerald-700'
+          } text-white font-semibold mt-4 py-3 px-6 md:rounded-lg rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50`}
         >
-          Add Expense
+          {isExpenseForm ? 'Add Expense' : 'Add Amount'}
         </button>
       </div>
     </div>

@@ -60,87 +60,83 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto pt-32">
-      <div className="border border-neutral-700 rounded-2xl p-8 sm:p-10">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-400">Welcome</h1>
-          <p className="text-gray-500 mt-2">
-            Already have an account {' '}
-            <Link to="/login" className="text-blue-600 hover:underline">
-              login
-            </Link>
-          </p>
+    <div className="md:border min-w-md border-neutral-700 md:rounded-2xl p-12 md:p-8 sm:p-10">
+      <div className="text-center mb-8">
+        <h1 className="text-2xl font-bold text-neutral-400">Welcome</h1>
+        <p className="text-gray-500 mt-2">
+          Already have an account{' '}
+          <Link to="/login" className="text-pink-600 font-semibold hover:underline">
+            login
+          </Link>
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+        {/* Name Field */}
+        <div>
+          <InputField
+            type="text"
+            placeholder="Your name"
+            icon={IdCard}
+            value={name}
+            onChange={(e) => {
+              setValidationError(null);
+              setName(e.target.value);
+            }}
+            required
+          />
+          {validationError?.properties?.name?.errors?.length > 0 && (
+            <p className="text-red-500 text-sm mt-1">{validationError.properties.name.errors[0]}</p>
+          )}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-          {/* Name Field */}
-          <div>
-            <InputField
-              type="text"
-              placeholder="Your name"
-              icon={IdCard}
-              value={name}
-              onChange={(e) => {
-                setValidationError(null);
-                setName(e.target.value);
-              }}
-              required
-            />
-            {validationError?.properties?.name?.errors?.length > 0 && (
-              <p className="text-red-500 text-sm mt-1">
-                {validationError.properties.name.errors[0]}
-              </p>
-            )}
-          </div>
+        {/* Email Field */}
+        <div>
+          <InputField
+            type="email"
+            placeholder="you@example.com"
+            icon={Mail}
+            value={email}
+            onChange={(e) => {
+              setValidationError(null);
+              setEmail(e.target.value);
+            }}
+            required
+          />
+          {validationError?.properties?.email?.errors?.length > 0 && (
+            <p className="text-red-500 text-sm mt-1">
+              {validationError.properties.email.errors[0]}
+            </p>
+          )}
+        </div>
 
-          {/* Email Field */}
-          <div>
-            <InputField
-              type="email"
-              placeholder="you@example.com"
-              icon={Mail}
-              value={email}
-              onChange={(e) => {
-                setValidationError(null);
-                setEmail(e.target.value);
-              }}
-              required
-            />
-            {validationError?.properties?.email?.errors?.length > 0 && (
-              <p className="text-red-500 text-sm mt-1">
-                {validationError.properties.email.errors[0]}
-              </p>
-            )}
-          </div>
+        {/* Password Field */}
+        <div>
+          <InputField
+            type={showPassword ? 'text' : 'password'}
+            placeholder="••••••••"
+            icon={Lock}
+            value={password}
+            onChange={(e) => {
+              setValidationError(null);
+              setPassword(e.target.value);
+            }}
+            showPasswordToggle={true}
+            showPassword={showPassword}
+            onTogglePassword={() => setShowPassword(!showPassword)}
+            required
+          />
+          {validationError?.properties?.password?.errors?.length > 0 && (
+            <p className="text-red-500 text-sm mt-1">
+              {validationError.properties.password.errors[0]}
+            </p>
+          )}
+        </div>
 
-          {/* Password Field */}
-          <div>
-            <InputField
-              type={showPassword ? 'text' : 'password'}
-              placeholder="••••••••"
-              icon={Lock}
-              value={password}
-              onChange={(e) => {
-                setValidationError(null);
-                setPassword(e.target.value);
-              }}
-              showPasswordToggle={true}
-              showPassword={showPassword}
-              onTogglePassword={() => setShowPassword(!showPassword)}
-              required
-            />
-            {validationError?.properties?.password?.errors?.length > 0 && (
-              <p className="text-red-500 text-sm mt-1">
-                {validationError.properties.password.errors[0]}
-              </p>
-            )}
-          </div>
-
-          <Button type="submit" isLoading={isPending}>
-            Sign up
-          </Button>
-        </form>
-      </div>
+        <Button type="submit" isLoading={isPending}>
+          Sign up
+        </Button>
+      </form>
     </div>
   );
 };
