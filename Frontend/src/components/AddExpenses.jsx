@@ -108,7 +108,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
           className={`flex-1 ${!isExpenseForm && "bg-neutral-800"} cursor-pointer hover:text-gray-300 p-2 px-4 md:text-xl font-bold flex items-center gap-2 justify-end`}
         >
           <Plus className="text-emerald-500" />
-          Received
+          Income
         </h2>
       </div>
 

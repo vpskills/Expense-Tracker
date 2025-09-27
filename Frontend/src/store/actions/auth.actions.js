@@ -27,3 +27,12 @@ export const getCurrentUser = async () => {
   };
   return await API(obj);
 };
+
+export const googleLoginAction = async ({ credential }) => {
+  const obj = {
+    url: `${AuthEndPoints.GoogleAuth}`,
+    method: "POST",
+    body: JSON.stringify({ credential }),
+  };
+  return await API(obj);
+};

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import Button from '../ui/Button.jsx';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import GoogleLoginButton from './GoogleLoginButton.jsx';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -24,7 +25,7 @@ export default function LoginForm() {
         localStorage.setItem('refresh', userData?.refreshToken);
         dispatch(login(userData));
         navigate('/');
-        toast.success(userData?.message || 'Signup Successfull');
+        toast.success(userData?.message || 'Login Successfull');
       } else {
         dispatch(logout());
         toast.error('Getting user details failed!');
@@ -81,6 +82,16 @@ export default function LoginForm() {
           Sign in
         </Button>
       </form>
+
+      {/* Divider */}
+      <div className="flex items-center my-6">
+        <div className="flex-grow border-t border-gray-600"></div>
+        <span className="px-3 text-gray-400 text-sm">OR</span>
+        <div className="flex-grow border-t border-gray-600"></div>
+      </div>
+
+      {/* 👇 Google Login Button */}
+      <GoogleLoginButton />
     </div>
   );
 }

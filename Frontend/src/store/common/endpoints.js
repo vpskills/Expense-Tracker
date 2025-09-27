@@ -10,6 +10,7 @@ export const AuthEndPoints = {
   Signup: 'api/v1/user/signup',
   GetUser: 'api/v1/user/get-user',
   Logout: 'api/v1/user/logout',
+  GoogleAuth: 'api/v1/user/auth/google'
 };
 
 export const CategoriesEndPoints = {

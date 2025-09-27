@@ -10,6 +10,7 @@ export function useAuth() {
   const query = useQuery({
     queryKey: ['currentUser'],
     queryFn: getCurrentUser,
+    retry: false,    
     refetchOnWindowFocus: false,
   });
 
@@ -26,7 +27,7 @@ export function useAuth() {
 
   useEffect(() => {
     if (query.isError) {
-      console.error("❌ Auth check failed:", query.error);
+      console.error("Auth check failed:", query.error);
       dispatch(logout());
     }
   }, [query.isError, query.error, dispatch]);

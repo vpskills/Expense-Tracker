@@ -1,13 +1,10 @@
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteExpense, fetchExpensesByDate } from '../store/actions/expenses.actions';
 import CustomLoader from './CustomLoader';
-import { useEffect, useState } from 'react';
-import { Loader, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { formatCurrency, formatDisplayDate } from '../utils';
-import { FadeLoader } from 'react-spinners';
 import { isMobile } from 'react-device-detect';
-import Skeleton from './Skeleton';
 
 const ListExpenses = ({ selectedDate }) => {
   const queryClient = useQueryClient();
@@ -77,12 +74,14 @@ const ListExpenses = ({ selectedDate }) => {
     deleteExpenseMutation(expId);
   }
 
-  if (isLoading) return <CustomLoader />;
+  if (isLoading) return (
+    <div className='h-svh'><CustomLoader className={'h-[75%]'}/></div>
+  );
 
   return (
     <div className="md:p-5 h-svh md:h-full flex flex-col">
       <div className="md:p-0 md:mb-6 p-3">
-        <div className="flex flex-col gap-3 md:gap-2 border border-neutral-700 rounded-md p-4 bg-neutral-900 overflow-x-auto mb-2">
+        <div className="flex flex-col gap-3 md:gap-2 border border-neutral-800 rounded-md p-4 bg-neutral-900 overflow-x-auto mb-2">
           <div className="flex justify-between text-neutral-400">
             <span className='text-sm md:text-lg'>Income</span>
             <span className="text-emerald-500 text-sm font-semibold md:text-lg">
@@ -92,7 +91,7 @@ const ListExpenses = ({ selectedDate }) => {
           <div className="flex justify-between text-neutral-400">
             <span className='text-sm md:text-lg'>Spent</span>
             <span className="text-red-400 text-sm font-semibold md:text-lg">
-              -{formatCurrency(getTotalAmount().expense, false)}
+              {getTotalAmount().expense>0&&'-'}{formatCurrency(getTotalAmount().expense, false)}
             </span>
           </div>
           <div className="flex justify-between text-neutral-400">
@@ -109,7 +108,7 @@ const ListExpenses = ({ selectedDate }) => {
         )}
       </div>
 
-      <div className="grow custom-scroll overflow-y-auto md:space-y-3">
+      <div className="grow custom-scroll overflow-y-auto md:space-y-3 pb-32 md:pb-0">
         {!data?.expenses?.length ? (
           <div className="text-center flex items-center flex-col justify-center h-[70%] text-gray-500 py-12 italic">
             <div className="text-4xl mb-4">📝</div>
@@ -119,7 +118,7 @@ const ListExpenses = ({ selectedDate }) => {
           data.expenses.map((expense) => (
             <div
               key={expense.id}
-              className="flex flex-col gap-2 p-2 md:rounded-xl transition-all duration-200 border border-neutral-800"
+              className="flex flex-col gap-2 p-2 md:rounded-xl transition-all duration-200 border-y md:border border-neutral-800"
             >
               <div className="flex justify-between">
                 <div className="p-2">
