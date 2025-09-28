@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from '../components/Calendar';
 import AddExpenses from '../components/AddExpenses';
-import ListExpenses from '../components/ListExpenses';
-import { isFutureDate, isToday } from '../utils';
-import UserDetailPopup from '../components/UserDetailPopup';
-import BottomNavigation from '../components/BottomNavigation';
-import { isMobile } from 'react-device-detect';
+import ListExpenses from '../components/ListExpenses/ListExpenses';
 import { useGlobalContext } from '../components/GlobalContext';
 
 const Home = () => {

@@ -11,6 +11,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Signup from './Pages/Signup.jsx';
 import { GlobalContextProvider } from './components/GlobalContext.jsx';
+import ExpenseDetailPage from './components/ListExpenses/ExpenseDetailPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
           </AuthWrapper>
         ),
       },
+      {
+        path: 'expense/details/:expenseId',
+        element: <ExpenseDetailPage/>
+      }
     ],
   },
 ]);
