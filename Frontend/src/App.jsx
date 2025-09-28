@@ -7,11 +7,13 @@ import { isMobile } from 'react-device-detect';
 import BottomNavigation from './components/BottomNavigation';
 import UserDetailPopup from './components/UserDetailPopup';
 import { useSelector } from 'react-redux';
+import { useRef } from 'react';
 
 function App() {
   const { isLoading } = useAuth();
   const isLogged = useSelector((state) => state.auth.status);
   const { profileWindowOpen, setProfileWindowOpen, formVisible, setFormVisible } = useGlobalContext();
+  const toggleRef = useRef(null);
 
   if (isLoading) {
     return (
@@ -35,14 +37,15 @@ function App() {
       />
       <Outlet />
       {isMobile && isLogged && (
-        <div className="md:hidden fixed bottom-0 inset-x-0 p-3 px-5 bg-neutral-900 z-20">
+        <div className="md:hidden fixed bottom-0 inset-x-0 p-1.5 px-5 bg-neutral-900 z-20">
           <BottomNavigation
+            ref={toggleRef}
             setProfileWindowOpen={setProfileWindowOpen}
             profileWindowOpen={profileWindowOpen}
             formVisible={formVisible}
             setFormVisible={setFormVisible}
           />
-          <UserDetailPopup profileWindowOpen={profileWindowOpen} />
+          <UserDetailPopup profileWindowOpen={profileWindowOpen} setProfileWindowOpen={setProfileWindowOpen} toggleRef={toggleRef}/>
         </div>
       )}
     </div>

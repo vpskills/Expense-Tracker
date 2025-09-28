@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, Settings, LogOut } from 'lucide-react';
 import { logout } from '../store/slices/authSlice';
 
-const UserDetailPopup = ({ profileWindowOpen }) => {
+const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef }) => {
   const { userData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const popupRef = useRef(null);
+
   const logoutUser = () => {
     localStorage.clear();
     dispatch(logout());
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target) &&
+        toggleRef.current &&
+        !toggleRef.current.contains(event.target)
+      ) {
+        setProfileWindowOpen(false);
+      }
+    }
+
+    if (profileWindowOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [profileWindowOpen, setProfileWindowOpen, toggleRef]);
+
   return (
     <div
+      ref={popupRef}
       className={`${
         profileWindowOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
       } origin-bottom-right min-w-64 absolute -top-[17.5rem] right-4 transition-all duration-200 ease-out flex flex-col border border-neutral-700/50 bg-gradient-to-br from-neutral-800 to-neutral-900 backdrop-blur-sm rounded-xl shadow-2xl shadow-black/25 overflow-hidden`}

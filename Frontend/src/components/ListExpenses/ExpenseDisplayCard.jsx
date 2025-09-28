@@ -26,7 +26,10 @@ const ExpenseDisplayCard = ({ isAnyExpenseMutating, expense, deleteExpenseHandle
 
       {/* delete expense */}
       <button
-        onClick={() => deleteExpenseHandler(expense?.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          deleteExpenseHandler(expense?.id)
+        }}
         disabled={isAnyExpenseMutating}
         className="rounded-full p-2 text-neutral-500 hover:text-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >

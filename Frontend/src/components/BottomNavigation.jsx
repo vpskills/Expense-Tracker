@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { HomeIcon, Plus, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const BottomNavigation = ({
+const BottomNavigation = forwardRef(({
   setFormVisible,
   formVisible,
   profileWindowOpen,
   setProfileWindowOpen,
-}) => {
+}, ref) => {
   const navigate = useNavigate();
   return (
     <div className="flex justify-between w-full items-center relative">
@@ -26,6 +26,7 @@ const BottomNavigation = ({
         <Plus size={40} />
       </div>
       <User
+        ref={ref}
         onClick={() => setProfileWindowOpen(!profileWindowOpen)}
         size={25}
         strokeWidth={2.5}
@@ -33,6 +34,6 @@ const BottomNavigation = ({
       />
     </div>
   );
-};
+});
 
 export default BottomNavigation;
