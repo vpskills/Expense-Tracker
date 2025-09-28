@@ -1,5 +1,6 @@
 import React from 'react';
 import { HomeIcon, Plus, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const BottomNavigation = ({
   setFormVisible,
@@ -7,9 +8,15 @@ const BottomNavigation = ({
   profileWindowOpen,
   setProfileWindowOpen,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-between w-full items-center relative">
-      <HomeIcon size={25} strokeWidth={2.5} className="text-neutral-500" />
+      <HomeIcon
+        onClick={() => navigate('/')}
+        size={25}
+        strokeWidth={2.5}
+        className="text-neutral-500"
+      />
       <Plus
         onClick={() => setFormVisible(!formVisible)}
         size={40}

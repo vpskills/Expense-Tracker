@@ -6,6 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { login, logout } from '../store/slices/authSlice';
 import { googleLoginAction } from '../store/actions/auth.actions';
+import { FcGoogle } from 'react-icons/fc';
+import Button from '../ui/Button';
 
 const GoogleLoginButton = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const GoogleLoginButton = () => {
       if (userData) {
         localStorage.setItem('access', userData?.accessToken);
         localStorage.setItem('refresh', userData?.refreshToken);
-        dispatch(login(userData));
+        dispatch(login(userData?.user));
         navigate('/');
         toast.success(userData?.message || 'Login successful');
       } else {
@@ -40,11 +42,19 @@ const GoogleLoginButton = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      <GoogleLogin
-        onSuccess={handleGoogleSuccess}
-        onError={() => console.error('Google Login Failed')}
-      />
+    <div className="flex justify-center relative">
+      {/* hidden button */}
+      <div className="absolute w-full border inset-0 opacity-0 pointer-events-auto">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => console.error('Google Login Failed')}
+        />
+      </div>
+      {/* visible button */}
+      <Button isLoading={isPending} disable={isPending} className="gap-2 bg-white shadow hover:bg-gray-200 pointer-events-none">
+        <FcGoogle size={20} />
+        <span className="font-medium text-gray-700">Continue with Google</span>
+      </Button>
     </div>
   );
 };

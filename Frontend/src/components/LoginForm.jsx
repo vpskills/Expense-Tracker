@@ -23,7 +23,7 @@ export default function LoginForm() {
       if (userData) {
         localStorage.setItem('access', userData?.accessToken);
         localStorage.setItem('refresh', userData?.refreshToken);
-        dispatch(login(userData));
+        dispatch(login(userData?.user));
         navigate('/');
         toast.success(userData?.message || 'Login Successfull');
       } else {
@@ -78,7 +78,11 @@ export default function LoginForm() {
           onTogglePassword={() => setShowPassword(!showPassword)}
         />
 
-        <Button type="submit" isLoading={isPending}>
+        <Button
+          className="hover:bg-pink-600 bg-pink-700 text-white"
+          type="submit"
+          isLoading={isPending}
+        >
           Sign in
         </Button>
       </form>

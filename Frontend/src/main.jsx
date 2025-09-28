@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Signup from './Pages/Signup.jsx';
+import { GlobalContextProvider } from './components/GlobalContext.jsx';
 
 const router = createBrowserRouter([
   {
@@ -48,10 +49,12 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-    <Provider store={reduxStore}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </Provider>
+    <GlobalContextProvider>
+      <Provider store={reduxStore}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </Provider>
+    </GlobalContextProvider>
   </GoogleOAuthProvider>
 );

@@ -5,12 +5,13 @@ import ListExpenses from '../components/ListExpenses';
 import { isFutureDate, isToday } from '../utils';
 import UserDetailPopup from '../components/UserDetailPopup';
 import BottomNavigation from '../components/BottomNavigation';
+import { isMobile } from 'react-device-detect';
+import { useGlobalContext } from '../components/GlobalContext';
 
 const Home = () => {
   const [expensesAdded, setExpensesAdded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [formVisible, setFormVisible] = useState(false);
-  const [profileWindowOpen, setProfileWindowOpen] = useState(false);
+  const { formVisible, setFormVisible } = useGlobalContext();
 
   return (
     <div className="relative md:static flex flex-col justify-center md:flex-row md:h-full md:max-w-7xl md:p-5 mx-auto md:gap-3 text-gray-400 overflow-auto custom-scroll">
@@ -32,20 +33,6 @@ const Home = () => {
       <div className="flex-1 md:border border-neutral-800 bg-neutral-950 md:rounded-2xl">
         <ListExpenses selectedDate={selectedDate} expensesAdded={expensesAdded} />
       </div>
-
-      {!isFutureDate(selectedDate) && (
-        <>
-          <div className="md:hidden fixed bottom-0 inset-x-0 p-3 px-5 bg-neutral-900 z-20">
-            <BottomNavigation
-              setProfileWindowOpen={setProfileWindowOpen}
-              profileWindowOpen={profileWindowOpen}
-              formVisible={formVisible}
-              setFormVisible={setFormVisible}
-            />
-            <UserDetailPopup profileWindowOpen={profileWindowOpen} />
-          </div>
-        </>
-      )}
     </div>
   );
 };

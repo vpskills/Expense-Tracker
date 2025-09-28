@@ -9,6 +9,7 @@ import Button from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
+import GoogleLoginButton from './GoogleLoginButton';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -32,7 +33,7 @@ const SignupForm = () => {
       if (userData) {
         localStorage.setItem('access', userData?.accessToken);
         localStorage.setItem('refresh', userData?.refreshToken);
-        dispatch(login(userData));
+        dispatch(login(userData?.user));
         navigate('/');
         toast.success(userData?.message || 'Signup Successfull');
       }
@@ -133,10 +134,24 @@ const SignupForm = () => {
           )}
         </div>
 
-        <Button type="submit" isLoading={isPending}>
+        <Button
+          className="hover:bg-pink-600 bg-pink-700 text-white"
+          type="submit"
+          isLoading={isPending}
+        >
           Sign up
         </Button>
       </form>
+
+      {/* Divider */}
+      <div className="flex items-center my-6">
+        <div className="flex-grow border-t border-gray-600"></div>
+        <span className="px-3 text-gray-400 text-sm">OR</span>
+        <div className="flex-grow border-t border-gray-600"></div>
+      </div>
+
+      {/* 👇 Google Login Button */}
+      <GoogleLoginButton />
     </div>
   );
 };
