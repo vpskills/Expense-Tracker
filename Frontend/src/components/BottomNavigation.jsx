@@ -17,13 +17,14 @@ const BottomNavigation = ({
         strokeWidth={2.5}
         className="text-neutral-500"
       />
-      <Plus
+      <div
         onClick={() => setFormVisible(!formVisible)}
-        size={40}
-        className={`transition-all bg-neutral-800 rounded-full p-1 ${
+        className={`transition-all duration-300 ${
           formVisible ? 'rotate-45 text-rose-500' : 'text-neutral-400'
-        }`}
-      />
+        } bg-gradient-to-r from-neutral-800 to-neutral-700 bg-neutral-800 rounded-full p-1`}
+      >
+        <Plus size={40} />
+      </div>
       <User
         onClick={() => setProfileWindowOpen(!profileWindowOpen)}
         size={25}

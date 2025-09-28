@@ -69,7 +69,7 @@ const ListExpenses = ({ selectedDate }) => {
     <div className="md:p-5 h-svh md:h-full flex flex-col">
       <DisplayAllAmounts data={data} selectedDate={selectedDate} />
 
-      <div className="grow custom-scroll overflow-y-auto md:space-y-3 pb-32 md:pb-0">
+      <div className="grow custom-scroll overflow-y-auto md:space-y-3 pb-32 md:pb-0 overscroll-none">
         {!data?.expenses?.length ? (
           <NoExpenseBanner />
         ) : (

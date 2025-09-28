@@ -35,7 +35,7 @@ export default function ExpenseDetailPage() {
   return (
     <div
       key={expenseId}
-      className={`min-h-screen transition-all duration-300 ${
+      className={`min-h-screen pb-10 md:pb-0 transition-all duration-300 ${
         isDarkMode
           ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white'
           : 'bg-gradient-to-br from-blue-50 via-white to-purple-50 text-gray-900'

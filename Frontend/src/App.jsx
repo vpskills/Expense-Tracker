@@ -6,9 +6,11 @@ import { useGlobalContext } from './components/GlobalContext';
 import { isMobile } from 'react-device-detect';
 import BottomNavigation from './components/BottomNavigation';
 import UserDetailPopup from './components/UserDetailPopup';
+import { useSelector } from 'react-redux';
 
 function App() {
   const { isLoading } = useAuth();
+  const isLogged = useSelector((state) => state.auth.status);
   const { profileWindowOpen, setProfileWindowOpen, formVisible, setFormVisible } = useGlobalContext();
 
   if (isLoading) {
@@ -32,7 +34,7 @@ function App() {
         }}
       />
       <Outlet />
-      {isMobile && (
+      {isMobile && isLogged && (
         <div className="md:hidden fixed bottom-0 inset-x-0 p-3 px-5 bg-neutral-900 z-20">
           <BottomNavigation
             setProfileWindowOpen={setProfileWindowOpen}
