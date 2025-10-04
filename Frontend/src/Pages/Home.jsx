@@ -12,8 +12,6 @@ const Home = () => {
   const { formVisible, setFormVisible } = useGlobalContext();
   const { calenderType } = useGlobalContext();
 
-  console.log(selectedDate, 'adf');
-
   return (
     <div className="relative md:static flex flex-col justify-center md:flex-row md:h-full md:max-w-7xl md:p-5 mx-auto md:gap-3 text-gray-400 overflow-auto custom-scroll">
       <div className="flex-0 md:flex-1 flex gap-1 flex-col h-full">

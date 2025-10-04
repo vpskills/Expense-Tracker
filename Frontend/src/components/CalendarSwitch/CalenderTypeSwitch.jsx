@@ -9,7 +9,7 @@ const CalenderTypeSwitch = () => {
     <div className="flex gap-5 py-1 px-5 justify-around">
       <CalendarSwitchButton
         onClick={() => setCalendarType(1)}
-        className={`border-cyan-700 bg-cyan-950 opacity-89 ${
+        className={`border-cyan-700 bg-cyan-950 opacity-70 ${
           calenderType === 1 && 'opacity-100 font-semibold border-cyan-500'
         }`}
       >
@@ -18,7 +18,7 @@ const CalenderTypeSwitch = () => {
 
       <CalendarSwitchButton
         onClick={() => setCalendarType(2)}
-        className={`border-amber-700 bg-amber-950 opacity-80 ${
+        className={`border-amber-700 bg-amber-950 opacity-70 ${
           calenderType === 2 && 'opacity-100 font-semibold border-amber-500'
         }`}
       >
@@ -27,7 +27,7 @@ const CalenderTypeSwitch = () => {
 
       <CalendarSwitchButton
         onClick={() => setCalendarType(3)}
-        className={`border-emerald-700 bg-emerald-950 opacity-80 ${
+        className={`border-emerald-700 bg-emerald-950 opacity-70 ${
           calenderType === 3 && 'opacity-100 font-semibold border-emerald-500'
         }`}
       >

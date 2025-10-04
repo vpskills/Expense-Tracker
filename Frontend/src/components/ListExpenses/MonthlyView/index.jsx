@@ -10,7 +10,7 @@ const MonthlyExpenseView = ({ selectedDate }) => {
     error,
   } = useQuery({
     queryKey: ['monthly-summary', selectedDate],
-    queryFn: () => getMonthlySummary({ selectedDate: selectedDate.toISOString() }),
+    queryFn: () => getMonthlySummary({ selectedDate: selectedDate.toLocaleDateString('en-CA') }),
     refetchOnWindowFocus: false,
     enabled: !!selectedDate,
     keepPreviousData: true,

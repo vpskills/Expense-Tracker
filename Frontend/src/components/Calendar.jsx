@@ -6,6 +6,7 @@ import { useGlobalContext } from './GlobalContext';
 
 const Calendar = ({ selectedDate, setSelectedDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [openCalender, setOpenCalender] = useState(false);
   const { calenderType } = useGlobalContext();
 
   const navigateMonth = (direction) => {
@@ -122,20 +123,23 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         >
           <ChevronLeft />
         </button>
-        <h3 className="md:text-xl font-bold text-gray-400">
+        <h3
+          onClick={() => setOpenCalender(!openCalender)}
+          className="md:text-xl font-bold text-gray-400"
+        >
           {calenderType === 1 &&
-            currentDate.toLocaleDateString('en-GB', {
+            selectedDate.toLocaleDateString('en-GB', {
               day: 'numeric',
               month: 'long',
               year: 'numeric',
             })}
           {calenderType === 2 &&
-            currentDate.toLocaleDateString('en-GB', {
+            selectedDate.toLocaleDateString('en-GB', {
               month: 'long',
               year: 'numeric',
             })}
           {calenderType === 3 &&
-            currentDate.toLocaleDateString('en-GB', {
+            selectedDate.toLocaleDateString('en-GB', {
               year: 'numeric',
             })}
         </h3>
@@ -151,7 +155,14 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
       </div>
 
       {/* Calendar Grid */}
-      <div className="hidden md:grid grid-cols-7 gap-2 my-4 rounded-xl">
+      <div
+        className={`${
+          isMobile &&
+          (openCalender
+            ? 'absolute z-50 scale-95 border border-neutral-700 inset-x-0 top-12 bg-neutral-950 p-5'
+            : 'hidden')
+        } grid grid-cols-7 gap-2 my-4 rounded-xl`}
+      >
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
           <div key={day} className="text-center font-semibold text-gray-300 p-3 text-lg rounded">
             {day}

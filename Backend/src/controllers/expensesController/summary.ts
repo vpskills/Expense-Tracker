@@ -35,7 +35,7 @@ export const getMonthlySummary = async (req: AuthRequest, res: Response) => {
       userId: String(userId),
       date: {
         gte: start,
-        lt: end,
+        lte: end,
       },
     },
     select: { amount: true, isExpense: true },
