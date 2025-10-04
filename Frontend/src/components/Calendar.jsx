@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { isFutureDate, isToday } from '../utils';
+import { isCurrentMonth, isCurrentYear, isFutureDate, isToday } from '../utils';
 import { isMobile } from 'react-device-detect';
+import { useGlobalContext } from './GlobalContext';
 
 const Calendar = ({ selectedDate, setSelectedDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const { calenderType } = useGlobalContext();
 
   const navigateMonth = (direction) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(currentDate.getMonth() + direction);
     setCurrentDate(newDate);
+    setSelectedDate(newDate);
   };
 
   const navigateDate = (direction) => {
@@ -18,6 +21,46 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
     setCurrentDate(newDate);
     setSelectedDate(newDate);
   };
+
+  const navigateYear = (direction) => {
+    const newDate = new Date(currentDate);
+    newDate.setFullYear(newDate.getFullYear() + direction);
+    setCurrentDate(newDate);
+    setSelectedDate(newDate);
+  };
+
+  const handlePrevClick = () => {
+    if (isMobile) {
+      if (calenderType === 1) {
+        navigateDate(-1);
+      } else if (calenderType === 2) {
+        navigateMonth(-1);
+      } else if (calenderType === 3) {
+        navigateYear(-1);
+      }
+    } else {
+      navigateMonth(-1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (isMobile) {
+      if (calenderType === 1) {
+        navigateDate(1);
+      } else if (calenderType === 2) {
+        navigateMonth(1);
+      } else if (calenderType === 3) {
+        navigateYear(1);
+      }
+    } else {
+      navigateMonth(1);
+    }
+  };
+
+  const isNextDisabled =
+    (calenderType === 1 && isToday(selectedDate)) ||
+    (calenderType === 2 && isCurrentMonth(selectedDate)) ||
+    (calenderType === 3 && isCurrentYear(selectedDate));
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear();
@@ -74,22 +117,34 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
       {/* Calendar Header */}
       <div className="flex justify-between items-center border border-neutral-800 rounded-xl p-2 bg-neutral-900 mx-auto">
         <button
-          onClick={() => (isMobile ? navigateDate(-1) : navigateMonth(-1))}
+          onClick={handlePrevClick}
           className="bg-neutral-800 hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all"
         >
           <ChevronLeft />
         </button>
         <h3 className="md:text-xl font-bold text-gray-400">
-          {currentDate.toLocaleDateString('en-GB', {
-            day: isMobile ? 'numeric' : undefined,
-            month: 'long',
-            year: 'numeric',
-          })}
+          {calenderType === 1 &&
+            currentDate.toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+          {calenderType === 2 &&
+            currentDate.toLocaleDateString('en-GB', {
+              month: 'long',
+              year: 'numeric',
+            })}
+          {calenderType === 3 &&
+            currentDate.toLocaleDateString('en-GB', {
+              year: 'numeric',
+            })}
         </h3>
         <button
-          disabled={isToday(selectedDate) && isMobile}
-          onClick={() => (isMobile ? navigateDate(1) : navigateMonth(1))}
-          className={`bg-neutral-800 ${isToday(selectedDate) && isMobile && "opacity-40 cursor-not-allowed"} hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all`}
+          disabled={isNextDisabled}
+          onClick={handleNextClick}
+          className={`bg-neutral-800 ${
+            isNextDisabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-neutral-700'
+          } text-gray-400 p-2 rounded-lg font-semibold transition-all`}
         >
           <ChevronRight />
         </button>

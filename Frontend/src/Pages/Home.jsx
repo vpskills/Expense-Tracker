@@ -3,11 +3,16 @@ import Calendar from '../components/Calendar';
 import AddExpenses from '../components/AddExpenses';
 import ListExpenses from '../components/ListExpenses/ListExpenses';
 import { useGlobalContext } from '../components/GlobalContext';
+import CalenderTypeSwitch from '../components/CalendarSwitch/CalenderTypeSwitch';
+import MonthlyExpenseView from '../components/ListExpenses/MonthlyView';
 
 const Home = () => {
   const [expensesAdded, setExpensesAdded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { formVisible, setFormVisible } = useGlobalContext();
+  const { calenderType } = useGlobalContext();
+
+  console.log(selectedDate, 'adf');
 
   return (
     <div className="relative md:static flex flex-col justify-center md:flex-row md:h-full md:max-w-7xl md:p-5 mx-auto md:gap-3 text-gray-400 overflow-auto custom-scroll">
@@ -26,8 +31,18 @@ const Home = () => {
         </div>
       </div>
 
+      <div className="block md:hidden">
+        <CalenderTypeSwitch />
+      </div>
+
       <div className="flex-1 md:border border-neutral-800 bg-neutral-950 md:rounded-2xl">
-        <ListExpenses selectedDate={selectedDate} expensesAdded={expensesAdded} />
+        {calenderType === 1 ? (
+          <ListExpenses selectedDate={selectedDate} expensesAdded={expensesAdded} />
+        ) : calenderType === 2 ? (
+          <MonthlyExpenseView selectedDate={selectedDate} />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

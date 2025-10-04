@@ -5,12 +5,15 @@ const GlobalContext = createContext();
 const useGlobalContextHook = () => {
   const [profileWindowOpen, setProfileWindowOpen] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
+  const [calenderType, setCalendarType] = useState(1);
 
   return {
     profileWindowOpen,
     setProfileWindowOpen,
     formVisible,
     setFormVisible,
+    calenderType,
+    setCalendarType
   };
 };
 

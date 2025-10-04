@@ -12,22 +12,36 @@ export const isFutureDate = (dayObj) => {
 
 export const isToday = (date) => {
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // reset time to 00:00
+  today.setHours(0, 0, 0, 0);
   const compareDate = new Date(date);
-  compareDate.setHours(0, 0, 0, 0); // reset time to 00:00
+  compareDate.setHours(0, 0, 0, 0);
   return compareDate.getTime() === today.getTime();
+};
+
+export const isCurrentMonth = (date) => {
+  const today = new Date();
+  const compareDate = new Date(date);
+  return (
+    today.getFullYear() === compareDate.getFullYear() && today.getMonth() === compareDate.getMonth()
+  );
+};
+
+export const isCurrentYear = (date) => {
+  const today = new Date();
+  const compareDate = new Date(date);
+  return today.getFullYear() === compareDate.getFullYear();
 };
 
 export function formatDisplayDate(date) {
   if (!date) return '';
   return new Date(date).toLocaleDateString('en-CA', {
-    weekday: 'long', 
+    weekday: 'long',
     month: 'long',
     day: 'numeric',
   });
 }
 
-export const formatCurrency = (value, sign=true) => {
+export const formatCurrency = (value, sign = true) => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',

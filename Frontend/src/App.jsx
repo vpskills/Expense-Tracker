@@ -25,7 +25,7 @@ function App() {
   }
 
   return (
-    <div className="bg-neutral-900 h-screen overflow-y-auto overflow-x-hidden custom-scroll relative">
+    <div className="bg-neutral-950 h-screen overflow-y-auto overflow-x-hidden custom-scroll relative">
       <Toaster
         toastOptions={{
           style: {

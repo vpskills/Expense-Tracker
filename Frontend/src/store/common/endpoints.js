@@ -3,6 +3,8 @@ export const ExpensesEndPoints = {
   AddExpense: 'api/v1/expenses/add',
   UpdateExpense: 'url',
   DeleteExpense: (id) => `api/v1/expenses/delete?id=${id}`,
+  GetMonthlySummary: (selectedDate) =>
+    `api/v1/expenses/summary/month/?selectedDate=${selectedDate}`,
 };
 
 export const AuthEndPoints = {
@@ -10,7 +12,7 @@ export const AuthEndPoints = {
   Signup: 'api/v1/user/signup',
   GetUser: 'api/v1/user/get-user',
   Logout: 'api/v1/user/logout',
-  GoogleAuth: 'api/v1/user/auth/google'
+  GoogleAuth: 'api/v1/user/auth/google',
 };
 
 export const CategoriesEndPoints = {
