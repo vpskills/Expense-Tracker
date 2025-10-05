@@ -17,7 +17,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   };
 
   const navigateDate = (direction) => {
-    const newDate = new Date(currentDate);
+    const newDate = new Date(selectedDate || currentDate);
     newDate.setDate(newDate.getDate() + direction);
     setCurrentDate(newDate);
     setSelectedDate(newDate);
@@ -172,7 +172,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
           <div
             key={index}
             onClick={() => !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date))}
-            className={`py-3 border border-neutral-800 flex items-center justify-center rounded-lg font-medium transition-all duration-500 text-xl
+            className={`py-2 md:py-3 border border-neutral-800 flex items-center justify-center rounded-full md:rounded-lg font-medium transition-all duration-500 text-xl
             ${
               dayObj.isCurrentMonth
                 ? 'bg-neutral-900 text-gray-400 hover:bg-neutral-800'

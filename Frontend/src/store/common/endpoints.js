@@ -5,6 +5,8 @@ export const ExpensesEndPoints = {
   DeleteExpense: (id) => `api/v1/expenses/delete?id=${id}`,
   GetMonthlySummary: (selectedDate) =>
     `api/v1/expenses/summary/month/?selectedDate=${selectedDate}`,
+  GetYearlySummary: (selectedDate) =>
+    `api/v1/expenses/summary/year/?selectedDate=${selectedDate}`,
 };
 
 export const AuthEndPoints = {

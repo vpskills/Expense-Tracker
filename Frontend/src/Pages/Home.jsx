@@ -5,6 +5,7 @@ import ListExpenses from '../components/ListExpenses/ListExpenses';
 import { useGlobalContext } from '../components/GlobalContext';
 import CalenderTypeSwitch from '../components/CalendarSwitch/CalenderTypeSwitch';
 import MonthlyExpenseView from '../components/ListExpenses/MonthlyView';
+import YearExpenseView from '../components/ListExpenses/YearlyView';
 
 const Home = () => {
   const [expensesAdded, setExpensesAdded] = useState(false);
@@ -39,7 +40,7 @@ const Home = () => {
         ) : calenderType === 2 ? (
           <MonthlyExpenseView selectedDate={selectedDate} />
         ) : (
-          ''
+          <YearExpenseView selectedDate={selectedDate}/>
         )}
       </div>
     </div>

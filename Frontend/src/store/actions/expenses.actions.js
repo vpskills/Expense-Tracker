@@ -32,3 +32,10 @@ export const getMonthlySummary = async ({ selectedDate }) => {
   };
   return await API(obj);
 };
+
+export const getYearlySummary = async ({ selectedDate }) => {
+  const obj = {
+    url: `${ExpensesEndPoints.GetYearlySummary(selectedDate)}`,
+  };
+  return await API(obj);
+};

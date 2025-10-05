@@ -24,7 +24,7 @@ const MonthlyExpenseView = ({ selectedDate }) => {
     );
 
   return (
-    <div className="p-3 pt-0">
+    <div className="p-4 pt-0">
       {/* Net Balance Card */}
       <div className="bg-gradient-to-br from-sky-900 to-indigo-950 rounded-2xl shadow-xl p-5 my-5 text-white">
         <div className="flex items-center justify-between mb-2">
