@@ -3,6 +3,7 @@ export const ExpensesEndPoints = {
   AddExpense: 'api/v1/expenses/add',
   UpdateExpense: 'url',
   DeleteExpense: (id) => `api/v1/expenses/delete?id=${id}`,
+  EditExpense: 'api/v1/expenses/edit',
   GetMonthlySummary: (selectedDate) =>
     `api/v1/expenses/summary/month/?selectedDate=${selectedDate}`,
   GetYearlySummary: (selectedDate) =>

@@ -26,6 +26,15 @@ export const deleteExpense = async (id) => {
   return await API(obj);
 };
 
+export const editExpense = async (payload) => {
+  const obj = {
+    url: `${ExpensesEndPoints.EditExpense}`,
+    method: 'PUT',
+    body: JSON.stringify(payload)
+  }
+  return await API(obj);
+}
+
 export const getMonthlySummary = async ({ selectedDate }) => {
   const obj = {
     url: `${ExpensesEndPoints.GetMonthlySummary(selectedDate)}`,
