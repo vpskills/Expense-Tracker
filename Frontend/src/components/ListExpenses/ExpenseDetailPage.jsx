@@ -330,7 +330,7 @@ export default function ExpenseDetailPage() {
                 : 'bg-white hover:bg-red-600 text-gray-700 hover:text-white border border-gray-300 hover:border-red-500'
             }`}
           >
-            {deletePending ? <Loader2 className="animate-spin" /> : 'Delete Expense'}
+            {deletePending ? <Loader2 className="animate-spin mx-auto"/> : 'Delete Expense'}
           </button>
         </div>
       </div>
