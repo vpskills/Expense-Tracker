@@ -1,10 +1,11 @@
 import React from 'react';
 import { Trash2 } from 'lucide-react';
+import ExpenseCategory from './ExpenseCategory';
 
 const ExpenseDisplayCard = ({ isAnyExpenseMutating, expense, deleteExpenseHandler }) => {
   return (
     <div className="flex justify-between">
-      <div className="p-2">
+      <div className="p-2 space-y-2">
         {/* Description */}
         <div className="text-sm mb-1 font-semibold font-mon mr-2 whitespace-pre-wrap ">
           {expense.description || 'No description'}
@@ -22,6 +23,9 @@ const ExpenseDisplayCard = ({ isAnyExpenseMutating, expense, deleteExpenseHandle
               : '+₹' + expense.amount.toFixed(2)}
           </div>
         </div>
+
+        {/* Category */}
+        <ExpenseCategory isAnyExpenseMutating={isAnyExpenseMutating} expense={expense}/>
       </div>
 
       {/* delete expense */}

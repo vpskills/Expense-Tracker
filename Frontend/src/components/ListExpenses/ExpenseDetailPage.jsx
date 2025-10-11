@@ -211,7 +211,7 @@ export default function ExpenseDetailPage() {
                   Category
                 </h3>
                 <p className={`md:text-lg ${isDarkMode ? 'text-green-400' : 'text-green-600'}`}>
-                  {expense.category || 'Not Provided'}
+                  {expense?.category?.emoji + " " + expense?.category?.label || 'Not Provided'}
                 </p>
               </div>
             </div>

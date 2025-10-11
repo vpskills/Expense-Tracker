@@ -12,6 +12,7 @@ const InputField = forwardRef(
       showPasswordToggle = false,
       onTogglePassword,
       showPassword = false,
+      mendatory = false,
       ...props
     },
     ref
@@ -24,7 +25,7 @@ const InputField = forwardRef(
           </div>
         )}
 
-        {label && <label className="block text-sm font-semibold mb-2">{label}</label>}
+        {label && <label className="block text-sm font-semibold mb-2">{label}{mendatory?"*":""}</label>}
 
         <input
           type={type}

@@ -20,4 +20,6 @@ export const AuthEndPoints = {
 
 export const CategoriesEndPoints = {
   GetCategories: (page, limit) => `api/v1/categories/get/?page=${page}&limit=${limit}`,
+  AddCategory: 'api/v1/categories/add',
+  DeleteUserCategory: (id) => `api/v1/categories/remove?id=${id}`
 };

@@ -20,14 +20,17 @@ model User {
   password  String?
   refreshToken String?
   expenses  Expense[]
+  Categories Category[]
   createdAt DateTime @default(now())
 }
 
 model Category {
   id     String   @id @default(cuid())
   label  String
-  emoji  String
+  emoji  String?
   expenses Expense[]
+  user     User?  @relation(fields: [userId], references: [id])
+  userId   String?
 }
 
 model Expense {

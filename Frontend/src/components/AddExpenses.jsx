@@ -1,11 +1,11 @@
 import { ArrowRightLeft, ArrowRightLeftIcon, Minus, Plus, RefreshCw } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDate, isFutureDate, isToday } from '../utils';
 import InputField from '../ui/InputField';
 import SelectField from '../ui/SelectField';
 import { addExpense } from '../store/actions/expenses.actions';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchCategories } from '../store/actions/categories.actions';
+import { deleteUserCategory, fetchCategories } from '../store/actions/categories.actions';
 import toast from 'react-hot-toast';
 import { isMobile } from 'react-device-detect';
 
@@ -14,15 +14,36 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
   const [isExpenseForm, setIsExpenseForm] = useState(true);
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
+  const [page, setPage] = useState(1);
+  const [categories, setCategories] = useState([]);
   const queryClient = useQueryClient();
 
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ['categories', { page: 1, limit: 20 }],
-  //   queryFn: () => fetchCategories({ page: 1, limit: 20 }),
-  //   keepPreviousData: true, // for smoother pagination
-  // });
+  const { data, isLoading} = useQuery({
+    queryKey: ['categories', { page, limit: 10 }],
+    queryFn: () => fetchCategories({ page, limit: 10 }),
+    keepPreviousData: true, // for smoother pagination
+  });
 
-  // const categories = data?.data || [];
+  const refetchCategories = () => {
+    setPage((prev) => prev + 1)
+  }
+
+  useEffect(() => {
+    if (data?.data && page > 1) {
+      setCategories((prev) => [...prev, ...data?.data]);
+    } else if (page === 1) {
+      setCategories(data?.data || []);
+    }
+  }, [data]);
+
+  //Mutation for delete category
+  const {mutate: deleteCategoryMutation, isPending: categoryDeletePending} = useMutation({
+    mutationFn: deleteUserCategory,
+    onSuccess: (data) => {
+      const filteredCat = categories?.filter(cat => cat?.id !== data?.category?.id);
+      setCategories(filteredCat);
+    }
+  })
 
   // Mutation for adding expense
   const { mutate: addExpenseMutation, isPending } = useMutation({
@@ -123,6 +144,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
         />
 
         <InputField
+          mendatory={true}
           label="Amount"
           type="number"
           value={amount}
@@ -130,14 +152,18 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
           placeholder="Enter amount"
         />
 
-        {/* <SelectField
+        <SelectField
           label="Category"
+          createBtn={true}
           isLoading={isLoading}
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
           options={categories}
           placeholder="Select a category"
-        /> */}
+          refetchCategories={refetchCategories}
+          deleteCategoryMutation={deleteCategoryMutation}
+          categoryDeletePending={categoryDeletePending}
+        />
 
         <button
           onClick={handleAddExpense}
