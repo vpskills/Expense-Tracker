@@ -25,7 +25,7 @@ const InputField = forwardRef(
           </div>
         )}
 
-        {label && <label className="block text-sm font-semibold mb-2">{label}{mendatory?"*":""}</label>}
+        {label && <label className="block text-sm font-semibold mb-2 dark:text-neutral-200">{label}{mendatory?"*":""}</label>}
 
         <input
           type={type}

@@ -115,7 +115,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
   };
 
   return (
-    <div className="bg-neutral-950 z-40 border border-neutral-800 w-full p-5 rounded-2xl md:mt-2 text-gray-400">
+    <div className="bg-neutral-950 z-40 border border-neutral-800 w-full p-5 rounded-2xl md:mt-2 max-h-11/12 overflow-auto custom-scroll text-gray-400">
       <div className="flex border border-neutral-800 rounded-full overflow-hidden justify-between items-center mb-6">
         <h2
           onClick={() => setIsExpenseForm(true)}

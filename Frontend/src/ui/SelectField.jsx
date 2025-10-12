@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { RefreshCw, Search, Trash2 } from 'lucide-react';
+import { ChevronDown, RefreshCw, Search, Trash2 } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNewCategory } from '../store/actions/categories.actions';
 import toast from 'react-hot-toast';
@@ -80,7 +80,7 @@ const SelectField = ({
   return (
     <div className={`w-full relative ${className}`} ref={dropdownRef}>
       {label && (
-        <label className="block text-sm font-semibold mb-2 text-neutral-200">{label}</label>
+        <label className="block text-sm font-semibold mb-2 dark:text-neutral-200">{label}</label>
       )}
 
       <button
@@ -96,39 +96,39 @@ const SelectField = ({
               : selectedOption.label
             : placeholder}
         </span>
-        <svg
+
+        <ChevronDown
           className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-neutral-900 border-2 border-neutral-800 md:rounded-lg rounded-md shadow-xl max-h-64 overflow-y-auto">
+        <div className="w-full mt-2 bg-neutral-900 border-2 border-neutral-800 md:rounded-lg rounded-md shadow-xl max-h-96 custom-scroll overflow-y-auto">
           {/* Add New Category Section */}
           <div className="sticky top-0 border-b border-neutral-800 bg-inherit">
             {!isCreating ? (
               <div className="flex gap-2 p-2">
-                <div className="flex-1 relative">
+                <div className="flex-1 flex items-center px-2 gap-2 border rounded border-neutral-700 bg-neutral-800 relative has-[:focus]:border-neutral-500 transition-colors">
+                  <Search className="w-4 h-4 text-neutral-500" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search categories..."
-                    className="w-full font-mon text-sm px-3 py-2 pl-9 rounded border border-neutral-700 bg-neutral-800 text-neutral-100 outline-none focus:border-neutral-600 transition-colors"
+                    placeholder="Search..."
+                    className="font-mon text-xs py-2 w-full text-neutral-100 outline-none bg-transparent"
                   />
-                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
                 </div>
                 {createBtn && (
                   <button
                     type="button"
                     onClick={() => setIsCreating(true)}
-                    className="flex items-center gap-2 px-3 py-2 font-mon font-semibold text-sm bg-neutral-800 hover:bg-neutral-750 transition-colors duration-150 rounded text-neutral-300 whitespace-nowrap"
+                    className="flex items-center gap-2 px-3 text-xs md:text-sm font-mon font-semibold bg-neutral-800 hover:bg-neutral-750 transition-colors duration-150 rounded text-neutral-300 whitespace-nowrap"
                   >
-                    {createCategoryPending ? <RefreshCw className='animate-spin' size={17}/> : "Add New"}
+                    {createCategoryPending ? (
+                      <RefreshCw className="animate-spin" size={17} />
+                    ) : (
+                      'Add New'
+                    )}
                   </button>
                 )}
               </div>
@@ -206,7 +206,11 @@ const SelectField = ({
                         }}
                         className="text-neutral-500 cursor-pointer"
                       >
-                        {categoryDeletePending && (deletingCategoryId === option?.id) ? <RefreshCw size={15} className='animate-spin'/> : <Trash2 size={15} />}
+                        {categoryDeletePending && deletingCategoryId === option?.id ? (
+                          <RefreshCw size={15} className="animate-spin" />
+                        ) : (
+                          <Trash2 size={15} />
+                        )}
                       </div>
                     </div>
                   )}
@@ -216,7 +220,7 @@ const SelectField = ({
           )}
           <div
             onClick={refetchCategories}
-            className="boder flex justify-center items-center gap-2 p-2 bg-neutral-800 text-sm cursor-pointer"
+            className="boder sticky bottom-0 flex justify-center items-center gap-2 p-2 bg-neutral-800 text-sm cursor-pointer"
           >
             <RefreshCw size={15} className={`${isLoading && 'animate-spin'}`} />
             Load More

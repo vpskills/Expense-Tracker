@@ -42,6 +42,8 @@ model Expense {
   userId      String
   category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String?
+  paidForOtherStatus   Boolean? @default(false)
+  isPaidForOther Boolean? @default(false)
   isExpense   Boolean @default(true)
   createdAt   DateTime @default(now())
 
