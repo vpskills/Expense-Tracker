@@ -171,7 +171,10 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         {getDaysInMonth(currentDate).map((dayObj, index) => (
           <div
             key={index}
-            onClick={() => !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date))}
+            onClick={() => {
+              !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date));
+              isMobile && !isFutureDate(dayObj) && setOpenCalender(false);
+            }}
             className={`py-2 md:py-3 border border-neutral-800 flex items-center justify-center rounded-full md:rounded-lg font-medium transition-all duration-500 text-xl
             ${
               dayObj.isCurrentMonth

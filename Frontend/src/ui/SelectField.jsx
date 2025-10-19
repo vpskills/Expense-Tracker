@@ -167,9 +167,7 @@ const SelectField = ({
           </div>
 
           {/* Options List */}
-          {isLoading ? (
-            <div className="p-3 text-center text-neutral-500 font-mon text-sm">Loading...</div>
-          ) : filteredOptions.length === 0 ? (
+          {filteredOptions.length === 0 ? (
             <div className="p-3 text-center text-neutral-500 font-mon text-sm">
               No options available
             </div>
@@ -218,13 +216,17 @@ const SelectField = ({
               );
             })
           )}
-          <div
-            onClick={refetchCategories}
-            className="boder sticky bottom-0 flex justify-center items-center gap-2 p-2 bg-neutral-800 text-sm cursor-pointer"
-          >
-            <RefreshCw size={15} className={`${isLoading && 'animate-spin'}`} />
-            Load More
-          </div>
+          {props?.currentPage < props?.totalPages && (
+            <div
+              onClick={() => {
+                if (!isLoading) refetchCategories();
+              }}
+              className="border-t border-t-neutral-700 sticky bottom-0 flex justify-center items-center gap-2 p-2 bg-neutral-800 text-sm cursor-pointer hover:bg-neutral-700 transition-all duration-200"
+            >
+              <RefreshCw size={15} className={`${isLoading ? 'animate-spin' : ''}`} />
+              {isLoading ? 'Loading...' : 'Load More'}
+            </div>
+          )}
         </div>
       )}
     </div>

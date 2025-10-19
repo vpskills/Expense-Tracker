@@ -163,6 +163,8 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
           refetchCategories={refetchCategories}
           deleteCategoryMutation={deleteCategoryMutation}
           categoryDeletePending={categoryDeletePending}
+          currentPage={data?.page}
+          totalPages={data?.totalPages}
         />
 
         <button

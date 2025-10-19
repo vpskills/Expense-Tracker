@@ -9,8 +9,7 @@ import YearExpenseView from '../components/ListExpenses/YearlyView';
 
 const Home = () => {
   const [expensesAdded, setExpensesAdded] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const { formVisible, setFormVisible } = useGlobalContext();
+  const { formVisible, setFormVisible, selectedDate, setSelectedDate } = useGlobalContext();
   const { calenderType } = useGlobalContext();
 
   return (

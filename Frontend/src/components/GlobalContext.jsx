@@ -6,6 +6,7 @@ const useGlobalContextHook = () => {
   const [profileWindowOpen, setProfileWindowOpen] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [calenderType, setCalendarType] = useState(1);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   return {
     profileWindowOpen,
@@ -13,7 +14,9 @@ const useGlobalContextHook = () => {
     formVisible,
     setFormVisible,
     calenderType,
-    setCalendarType
+    setCalendarType,
+    selectedDate, 
+    setSelectedDate
   };
 };
 
