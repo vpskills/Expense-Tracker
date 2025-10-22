@@ -20,10 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 import userRoutes from './routes/user.routes.js';
 import categoryRoute from './routes/category.routes.js';
 import expensesRoute from './routes/expense.routes.js';
+import exportRoute from './routes/exportFiles.routes.js'
 
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/categories', categoryRoute);
 app.use('/api/v1/expenses', expensesRoute);
+app.use('/api/v1/export', exportRoute);
 
 app.get('/', (req, res) => {
   res.send("Hello World 👋, I'm Expenses Server");

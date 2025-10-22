@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, Settings, LogOut } from 'lucide-react';
+import { User, Settings, LogOut, Download } from 'lucide-react';
 import { logout } from '../store/slices/authSlice';
+import { FcEngineering } from "react-icons/fc";
+import { RiAccountCircleFill } from "react-icons/ri";
+import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
+import { BiSolidFilePdf } from "react-icons/bi";
+import ExportButton from './ExportFiles/ExportExcelFile';
 
 const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef }) => {
   const { userData } = useSelector((state) => state.auth);
@@ -39,7 +44,7 @@ const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef })
       ref={popupRef}
       className={`${
         profileWindowOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-      } origin-bottom-right min-w-64 absolute -top-[17.5rem] right-4 transition-all duration-200 ease-out flex flex-col border border-neutral-700/50 bg-gradient-to-br from-neutral-800 to-neutral-900 backdrop-blur-sm rounded-xl shadow-2xl shadow-black/25 overflow-hidden`}
+      } origin-bottom-right min-w-64 absolute -top-[23rem] right-3 transition-all duration-200 ease-out flex flex-col border border-neutral-700/50 bg-gradient-to-br from-neutral-800 to-neutral-900 backdrop-blur-sm rounded-xl shadow-2xl shadow-black/25 overflow-hidden`}
     >
       {/* Header with user info */}
       <div className="p-4 bg-gradient-to-r from-neutral-700/30 to-transparent border-b border-neutral-700/30">
@@ -59,31 +64,50 @@ const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef })
       </div>
 
       {/* Menu items */}
-      <div className="p-2">
+      <div className="p-2 max-h-52 overflow-y-auto">
         {/* Profile option */}
-        <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+        {/* <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
-            <User className="w-4 h-4 text-neutral-300" />
+            <RiAccountCircleFill className="w-5 h-5 text-blue-300" />
           </div>
           <span className="text-sm font-medium text-neutral-200 group-hover:text-white transition-colors">
             View Profile
           </span>
-        </div>
+        </div> */}
 
         {/* Settings option */}
-        <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+        {/* <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
-            <Settings className="w-4 h-4 text-neutral-300" />
+            <Settings className="w-5 h-5 text-orange-500" />
           </div>
           <span className="text-sm font-medium text-neutral-200 group-hover:text-white transition-colors">
             Settings
           </span>
+        </div> */}
+
+        <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+          <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
+            <PiMicrosoftExcelLogoFill className="w-5 h-5 text-emerald-600" />
+          </div>
+          <span className="text-sm font-medium text-neutral-200 group-hover:text-white transition-colors">
+            <ExportButton type='excel'/>
+          </span>
         </div>
 
-        {/* Divider */}
-        <div className="my-2 border-t border-neutral-700/50"></div>
+        <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+          <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
+            <BiSolidFilePdf className="w-5 h-5 text-rose-600" />
+          </div>
+          <span className="text-sm font-medium text-neutral-200 group-hover:text-white transition-colors">
+            <ExportButton type='pdf' />
+          </span>
+        </div>
+      </div>
+      {/* Divider */}
+      <div className="my-2 border-t border-neutral-700/50"></div>
 
-        {/* Logout button */}
+      {/* Logout button */}
+      <div className='px-2 pb-2'>
         <div
           onClick={logoutUser}
           className="flex items-center gap-3 p-2.5 rounded-lg bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 transition-all cursor-pointer group shadow-lg shadow-rose-900/20"

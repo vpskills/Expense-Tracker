@@ -23,3 +23,7 @@ export const CategoriesEndPoints = {
   AddCategory: 'api/v1/categories/add',
   DeleteUserCategory: (id) => `api/v1/categories/remove?id=${id}`
 };
+
+export const GenerateFiles = {
+  ExportExcel: (selectedDate, docType = 'excel') => `api/v1/export/monthly-expenses/?selectedDate=${selectedDate}&docType=${docType}`
+}

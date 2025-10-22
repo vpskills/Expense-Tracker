@@ -22,12 +22,15 @@ export const getMonthlySummary = async (req: AuthRequest, res: Response) => {
     return new ApiError('Invalid date format', 400);
   }
 
-  // Construct start and end of month
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
 
   const start = `${year}-${String(month).padStart(2, '0')}-01`;
-  const end = `${year}-${String(month).padStart(2, '0')}-31`;
+
+  // Calculate the first day of NEXT month
+  const nextMonth = month === 12 ? 1 : month + 1;
+  const nextYear = month === 12 ? year + 1 : year;
+  const end = `${nextYear}-${String(nextMonth).padStart(2, '0')}-01`;
 
   // Fetch all expenses/incomes in month
   const transactions = await prisma.expense.findMany({
@@ -35,7 +38,7 @@ export const getMonthlySummary = async (req: AuthRequest, res: Response) => {
       userId: String(userId),
       date: {
         gte: start,
-        lte: end,
+        lt: end,
       },
     },
     select: { amount: true, isExpense: true },
