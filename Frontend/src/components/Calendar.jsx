@@ -116,16 +116,16 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   return (
     <div className="dark:bg-neutral-950 p-2 md:rounded-2xl md:border border-neutral-800">
       {/* Calendar Header */}
-      <div className="flex justify-between items-center dark:border border-neutral-800 rounded-xl p-2 bg-blue-100 dark:bg-neutral-900 mx-auto">
+      <div className="flex justify-between items-center border border-blue-200 dark:border-neutral-800 rounded-xl p-2 bg-blue-100 dark:bg-neutral-900 mx-auto">
         <button
           onClick={handlePrevClick}
-          className="bg-blue-200 dark:bg-neutral-800 hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all"
+          className="bg-blue-200 dark:bg-neutral-800 hover:bg-neutral-700 text-blue-600 dark:text-gray-400 p-2 rounded-lg font-semibold transition-all"
         >
           <ChevronLeft />
         </button>
         <h3
           onClick={() => setOpenCalender(!openCalender)}
-          className="md:text-xl font-bold text-gray-900 dark:text-gray-400"
+          className="md:text-xl font-bold text-black dark:text-gray-400"
         >
           {calenderType === 1 &&
             selectedDate.toLocaleDateString('en-GB', {
@@ -146,9 +146,9 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         <button
           disabled={isNextDisabled}
           onClick={handleNextClick}
-          className={`bg-blue-100 dark:bg-neutral-800 ${
+          className={`bg-blue-200 dark:bg-neutral-800 ${
             isNextDisabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-neutral-700'
-          } text-gray-400 p-2 rounded-lg font-semibold transition-all`}
+          } text-blue-600 dark:text-gray-400 p-2 rounded-lg font-semibold transition-all`}
         >
           <ChevronRight />
         </button>

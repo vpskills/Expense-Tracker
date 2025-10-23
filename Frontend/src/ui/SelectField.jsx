@@ -105,26 +105,26 @@ const SelectField = ({
       </button>
 
       {isOpen && (
-        <div className="w-full mt-2 bg-neutral-900 border-2 border-neutral-800 md:rounded-lg rounded-md shadow-xl max-h-96 custom-scroll overflow-y-auto">
+        <div className="w-full mt-2 text-white bg-blue-100 dark:bg-neutral-900 border-2 dark:border-neutral-800 md:rounded-lg rounded-md shadow-xl max-h-96 custom-scroll overflow-y-auto">
           {/* Add New Category Section */}
-          <div className="sticky top-0 border-b border-neutral-800 bg-inherit">
+          <div className="sticky top-0 border-b border-blue-200 dark:border-neutral-800 bg-blue-200 dark:bg-inherit">
             {!isCreating ? (
               <div className="flex gap-2 p-2">
-                <div className="flex-1 flex items-center px-2 gap-2 border rounded border-neutral-700 bg-neutral-800 relative has-[:focus]:border-neutral-500 transition-colors">
-                  <Search className="w-4 h-4 text-neutral-500" />
+                <div className="flex-1 flex items-center px-2 gap-2 dark:border rounded-md border-neutral-700 bg-blue-50 dark:bg-neutral-800 relative has-[:focus]:border-neutral-500 transition-colors">
+                  <Search className="w-4 h-4 text-black dark:text-neutral-500" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search..."
-                    className="font-mon text-xs py-2 w-full text-neutral-100 outline-none bg-transparent"
+                    className="font-mon text-xs py-2 w-full text-black dark:text-neutral-100 outline-none bg-transparent"
                   />
                 </div>
                 {createBtn && (
                   <button
                     type="button"
                     onClick={() => setIsCreating(true)}
-                    className="flex items-center gap-2 px-3 text-xs md:text-sm font-mon font-semibold bg-neutral-800 hover:bg-neutral-750 transition-colors duration-150 rounded text-neutral-300 whitespace-nowrap"
+                    className="flex items-center gap-2 px-3 text-xs md:text-sm font-mon font-semibold bg-blue-500 dark:bg-neutral-800 hover:bg-neutral-750 transition-colors duration-150 rounded text-white dark:text-neutral-300 whitespace-nowrap"
                   >
                     {createCategoryPending ? (
                       <RefreshCw className="animate-spin" size={17} />
@@ -143,13 +143,13 @@ const SelectField = ({
                   onKeyDown={handleKeyDown}
                   placeholder="Enter category name..."
                   autoFocus
-                  className="w-full font-mon text-sm p-2 rounded-md border border-neutral-700 bg-neutral-800 text-neutral-100 outline-none focus:border-blue-500 transition-colors"
+                  className="w-full font-mon text-sm p-2 rounded-md dark:border border-neutral-700 bg-blue-50 dark:bg-neutral-800 text-black dark:text-neutral-100 outline-none focus:border-blue-500 transition-colors"
                 />
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={handleCreateNew}
-                    className="flex-1 px-3 py-1.5 bg-blue-900 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
+                    className="flex-1 px-3 py-1.5 bg-blue-500 dark:bg-blue-900 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
                   >
                     Add
                   </button>
@@ -159,7 +159,7 @@ const SelectField = ({
                       setIsCreating(false);
                       setNewCategoryName('');
                     }}
-                    className="flex-1 px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold rounded transition-colors"
+                    className="flex-1 px-3 py-1.5 bg-white dark:bg-neutral-800 hover:bg-neutral-700 text-black dark:text-neutral-300 text-xs font-semibold rounded transition-colors"
                   >
                     Cancel
                   </button>
@@ -170,7 +170,7 @@ const SelectField = ({
 
           {/* Options List */}
           {filteredOptions.length === 0 ? (
-            <div className="p-3 text-center text-neutral-500 font-mon text-sm">
+            <div className="p-3 text-center text-black dark:text-neutral-500 font-mon text-sm">
               No options available
             </div>
           ) : (
@@ -183,7 +183,7 @@ const SelectField = ({
                   type="button"
                   onClick={() => handleSelect(option)}
                   className={`w-full p-3 text-left font-mon font-semibold text-sm hover:bg-neutral-800 transition-colors duration-150 ${
-                    isSelected ? 'bg-neutral-800 text-blue-400' : 'text-neutral-200'
+                    isSelected ? 'bg-neutral-800 text-blue-400' : 'text-black dark:text-neutral-200'
                   }`}
                 >
                   {!option.userId ? (
@@ -223,7 +223,7 @@ const SelectField = ({
               onClick={() => {
                 if (!isLoading) refetchCategories();
               }}
-              className="border-t border-t-neutral-700 sticky bottom-0 flex justify-center items-center gap-2 p-2 bg-neutral-800 text-sm cursor-pointer hover:bg-neutral-700 transition-all duration-200"
+              className="border-t border-t-blue-200 dark:border-t-neutral-700 sticky bottom-0 flex justify-center items-center gap-2 p-2 bg-blue-500 dark:bg-neutral-800 text-sm cursor-pointer hover:bg-neutral-700 transition-all duration-200"
             >
               <RefreshCw size={15} className={`${isLoading ? 'animate-spin' : ''}`} />
               {isLoading ? 'Loading...' : 'Load More'}

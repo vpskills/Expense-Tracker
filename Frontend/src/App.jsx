@@ -37,7 +37,7 @@ function App() {
       />
       <Outlet />
       {isMobile && isLogged && (
-        <div className="md:hidden fixed bottom-0 inset-x-0 p-1.5 px-5 dark:bg-neutral-900 z-20">
+        <div className="md:hidden fixed bottom-0 inset-x-0 p-1.5 px-5 bg-blue-100 dark:bg-neutral-900 z-20">
           <BottomNavigation
             ref={toggleRef}
             setProfileWindowOpen={setProfileWindowOpen}
