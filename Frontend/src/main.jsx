@@ -13,6 +13,7 @@ import Signup from './Pages/Signup.jsx';
 import { GlobalContextProvider } from './components/GlobalContext.jsx';
 import ExpenseDetailPage from './components/ListExpenses/ExpenseDetailPage.jsx';
 import Profile from './Pages/Profile.jsx';
+import Settings from './Pages/Settings.jsx';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
         element: (
           <AuthWrapper>
             <Profile />
+          </AuthWrapper>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <AuthWrapper>
+            <Settings />
           </AuthWrapper>
         ),
       },

@@ -12,13 +12,13 @@ const ProfileComponent = () => {
     <div className="dark:text-slate-200 p-4">
         <nav className="flex items-center">
           <div onClick={() => navigate('/')}><IoChevronBack/></div>
-          <div className="flex-1 flex justify-center items-center">Profile</div>
+          <div className="flex-1 flex justify-center items-center font-semibold">Profile</div>
         </nav>
         <main className="mt-10 space-y-7">
           <div className="flex gap-3 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
             <RiAccountCircleFill className="w-8 h-8 text-blue-300" />
             <div>
-              <div className="font-medium text-neutral-200 group-hover:text-white transition-colors">
+              <div className="font-medium dark:text-neutral-200 group-hover:text-white transition-colors">
                 {userData?.name}
               </div>
               <span className="text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
@@ -30,7 +30,7 @@ const ProfileComponent = () => {
           <div className="flex gap-3 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <MdEmail className="w-7 h-7 text-blue-300" />
             <div>
-              <div className="font-medium text-neutral-200 group-hover:text-white transition-colors">
+              <div className="font-medium dark:text-neutral-200 group-hover:text-white transition-colors">
                 {userData?.email}
               </div>
               <span className="text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">

@@ -9,7 +9,7 @@ const ExpenseCategory = ({ isAnyExpenseMutating, expense }) => {
         <Skeleton />
       ) : (
         <div
-          className={`text-[10px] md:text-xs bg-stone-900 text-gray-300 border border-stone-800 py-0.5 px-1.5 font-mono rounded-full font-semibold flex justify-center items-center w-max`}
+          className={`text-[10px] md:text-xs bg-white dark:bg-stone-900 text-black dark:text-gray-300 border border-blue-200 dark:border-stone-800 py-0.5 px-1.5 font-mono rounded-full font-semibold flex justify-center items-center w-max`}
         >
           {expense?.category &&
             `${expense?.category?.emoji ? expense?.category?.emoji : '⭕️'} ${

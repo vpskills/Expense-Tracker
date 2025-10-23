@@ -78,7 +78,7 @@ const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef })
         </div>
 
         {/* Settings option */}
-        <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+        <div onClick={() => navigate('/settings')} className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
             <Settings className="w-5 h-5 text-orange-500" />
           </div>

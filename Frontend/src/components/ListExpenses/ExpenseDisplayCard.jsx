@@ -55,7 +55,7 @@ const ExpenseDisplayCard = ({
       <div className="p-2 space-y-2">
         {/* Description */}
         <div
-          className={`text-sm font-semibold font-mon whitespace-pre-wrap ${
+          className={`text-sm text-black dark:text-slate-200 font-semibold font-mon whitespace-pre-wrap ${
             expense?.isPaidForOther && expense?.paidForOtherStatus
               ? 'line-through line-clamp-1'
               : ''

@@ -77,7 +77,7 @@ const ListExpenses = ({ selectedDate }) => {
             <div
               onClick={() => navigate(`/expense/details/${expense?.id}`, { state: { expense } })}
               key={expense.id}
-              className="flex flex-col gap-2 p-2 md:rounded-xl transition-all duration-200 border-y md:border border-neutral-800"
+              className="flex flex-col gap-2 p-2 md:rounded-xl transition-all duration-200 bg-blue-100 dark:bg-inherit border-y md:border border-blue-200 dark:border-neutral-800"
             >
               <ExpenseDisplayCard
                 selectedDate={selectedDate}
