@@ -25,7 +25,7 @@ function App() {
   }
 
   return (
-    <div className="bg-neutral-950 h-screen overflow-y-auto overflow-x-hidden custom-scroll relative">
+    <div className="dark:bg-neutral-950 h-screen overflow-y-auto overflow-x-hidden custom-scroll relative">
       <Toaster
         toastOptions={{
           style: {
@@ -37,7 +37,7 @@ function App() {
       />
       <Outlet />
       {isMobile && isLogged && (
-        <div className="md:hidden fixed bottom-0 inset-x-0 p-1.5 px-5 bg-neutral-900 z-20">
+        <div className="md:hidden fixed bottom-0 inset-x-0 p-1.5 px-5 dark:bg-neutral-900 z-20">
           <BottomNavigation
             ref={toggleRef}
             setProfileWindowOpen={setProfileWindowOpen}

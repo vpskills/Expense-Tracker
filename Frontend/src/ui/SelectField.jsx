@@ -88,7 +88,7 @@ const SelectField = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full font-mon text-sm md:text-md p-3 md:rounded-lg rounded-md border-2 border-neutral-800 bg-neutral-900 font-semibold outline-none transition-all duration-200 hover:border-neutral-700 focus:border-neutral-600 text-left flex items-center justify-between"
+        className="w-full font-mon text-sm md:text-md p-3 md:rounded-lg rounded-md border border-blue-200 dark:border-neutral-800 bg-blue-100 dark:bg-neutral-900 font-semibold outline-none transition-all duration-200 hover:border-neutral-700 focus:border-blue-200 focus:dark:border-neutral-600 text-left flex items-center justify-between"
         {...props}
       >
         <span className={selectedOption ? 'text-neutral-100' : 'text-neutral-500'}>

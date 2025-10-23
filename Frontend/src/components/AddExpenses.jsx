@@ -115,18 +115,18 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
   };
 
   return (
-    <div className="bg-neutral-950 z-40 border border-neutral-800 w-full p-5 rounded-2xl md:mt-2 max-h-11/12 overflow-auto custom-scroll text-gray-400">
-      <div className="flex border border-neutral-800 rounded-full overflow-hidden justify-between items-center mb-6">
+    <div className="bg-blue-50 dark:bg-neutral-950 z-40 border border-blue-100 dark:border-neutral-800 w-full p-5 rounded-2xl md:mt-2 max-h-11/12 overflow-auto custom-scroll text-blue-950 dark:text-gray-400">
+      <div className="flex border border-blue-200 dark:border-neutral-800 rounded-full overflow-hidden justify-between items-center mb-6">
         <h2
           onClick={() => setIsExpenseForm(true)}
-          className={`flex-1 ${isExpenseForm && "bg-neutral-800"} cursor-pointer border-r p-2 px-4 border-neutral-700 hover:text-gray-300  md:text-xl font-bold flex items-center gap-2`}
+          className={`flex-1 ${isExpenseForm && "bg-blue-200 dark:bg-neutral-800"} cursor-pointer dark:border-r p-2 px-4 border-neutral-700 hover:text-gray-300  md:text-xl font-bold flex items-center gap-2`}
         >
           <Plus className={'text-rose-500'} />
           Expense
         </h2>
         <h2
           onClick={() => setIsExpenseForm(false)}
-          className={`flex-1 ${!isExpenseForm && "bg-neutral-800"} cursor-pointer hover:text-gray-300 p-2 px-4 md:text-xl font-bold flex items-center gap-2 justify-end`}
+          className={`flex-1 ${!isExpenseForm && "bg-blue-200 dark:bg-neutral-800"} cursor-pointer hover:text-gray-300 p-2 px-4 md:text-xl font-bold flex items-center gap-2 justify-end`}
         >
           <Plus className="text-emerald-500" />
           Income

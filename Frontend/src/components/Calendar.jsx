@@ -114,18 +114,18 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   };
 
   return (
-    <div className="bg-neutral-950 p-2 md:rounded-2xl md:border border-neutral-800">
+    <div className="dark:bg-neutral-950 p-2 md:rounded-2xl md:border border-neutral-800">
       {/* Calendar Header */}
-      <div className="flex justify-between items-center border border-neutral-800 rounded-xl p-2 bg-neutral-900 mx-auto">
+      <div className="flex justify-between items-center dark:border border-neutral-800 rounded-xl p-2 bg-blue-100 dark:bg-neutral-900 mx-auto">
         <button
           onClick={handlePrevClick}
-          className="bg-neutral-800 hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all"
+          className="bg-blue-200 dark:bg-neutral-800 hover:bg-neutral-700 text-gray-400 p-2 rounded-lg font-semibold transition-all"
         >
           <ChevronLeft />
         </button>
         <h3
           onClick={() => setOpenCalender(!openCalender)}
-          className="md:text-xl font-bold text-gray-400"
+          className="md:text-xl font-bold text-gray-900 dark:text-gray-400"
         >
           {calenderType === 1 &&
             selectedDate.toLocaleDateString('en-GB', {
@@ -146,7 +146,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         <button
           disabled={isNextDisabled}
           onClick={handleNextClick}
-          className={`bg-neutral-800 ${
+          className={`bg-blue-100 dark:bg-neutral-800 ${
             isNextDisabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-neutral-700'
           } text-gray-400 p-2 rounded-lg font-semibold transition-all`}
         >
@@ -159,12 +159,12 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         className={`${
           isMobile &&
           (openCalender
-            ? 'absolute z-50 scale-95 border border-neutral-700 inset-x-0 top-12 bg-neutral-950 p-5'
+            ? 'absolute z-50 scale-95 dark:border border-neutral-700 inset-x-0 top-12 bg-blue-50 dark:bg-neutral-950 p-5'
             : 'hidden')
         } grid grid-cols-7 gap-2 my-4 rounded-xl`}
       >
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-          <div key={day} className="text-center font-semibold text-gray-300 p-3 text-lg rounded">
+          <div key={day} className="text-center font-semibold text-blue-950 dark:text-gray-300 p-3 text-lg rounded">
             {day}
           </div>
         ))}
@@ -175,10 +175,10 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
               !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date));
               isMobile && !isFutureDate(dayObj) && setOpenCalender(false);
             }}
-            className={`py-2 md:py-3 border border-neutral-800 flex items-center justify-center rounded-full md:rounded-lg font-medium transition-all duration-500 text-xl
+            className={`py-[7px] md:py-3 border dark:border-neutral-800 flex items-center justify-center rounded-full md:rounded-lg font-medium transition-all duration-500 text-xl
             ${
               dayObj.isCurrentMonth
-                ? 'bg-neutral-900 text-gray-400 hover:bg-neutral-800'
+                ? 'bg-blue-200 text-blue-950 border-0 dark:bg-neutral-900 dark:text-gray-400 hover:bg-neutral-800'
                 : 'text-gray-600 hover:bg-gray-900'
             }
             ${
@@ -188,7 +188,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
             }
             ${
               dayObj.isToday && !isDateSelected(new Date(dayObj.date))
-                ? 'ring-2 ring-rose-700 bg-rose-950'
+                ? 'ring-2 ring-blue-700 bg-blue-400 dark:ring-rose-700 dark:bg-rose-950'
                 : ''
             }
             ${isFutureDate(dayObj) ? 'cursor-not-allowed' : 'cursor-pointer'}

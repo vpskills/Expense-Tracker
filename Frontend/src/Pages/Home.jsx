@@ -33,7 +33,7 @@ const Home = () => {
         <CalenderTypeSwitch />
       </div>
 
-      <div className="flex-1 md:border border-neutral-800 bg-neutral-950 md:rounded-2xl">
+      <div className="flex-1 md:border border-neutral-800 dark:bg-neutral-950 md:rounded-2xl">
         {calenderType === 1 ? (
           <ListExpenses selectedDate={selectedDate} expensesAdded={expensesAdded} />
         ) : calenderType === 2 ? (

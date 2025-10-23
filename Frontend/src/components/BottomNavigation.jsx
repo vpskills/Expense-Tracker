@@ -15,12 +15,12 @@ const BottomNavigation = forwardRef(({
         onClick={() => navigate('/')}
         size={25}
         strokeWidth={2.5}
-        className="text-neutral-500"
+        className="text-blue-400 dark:text-neutral-500"
       />
       <div
         onClick={() => setFormVisible(!formVisible)}
         className={`transition-all duration-300 ${
-          formVisible ? 'rotate-45 text-rose-500' : 'text-neutral-400'
+          formVisible ? 'rotate-45 text-rose-500' : 'text-white dark:text-neutral-400'
         } bg-gradient-to-r from-neutral-800 to-neutral-700 bg-neutral-800 rounded-full p-1`}
       >
         <Plus size={40} />
@@ -30,7 +30,7 @@ const BottomNavigation = forwardRef(({
         onClick={() => setProfileWindowOpen(!profileWindowOpen)}
         size={25}
         strokeWidth={2.5}
-        className="text-neutral-500"
+        className="text-blue-400 dark:text-neutral-500"
       />
     </div>
   );
