@@ -17,6 +17,8 @@ const SelectField = ({
   refetchCategories,
   deleteCategoryMutation,
   categoryDeletePending,
+  currentPage,
+  totalPages,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -216,7 +218,7 @@ const SelectField = ({
               );
             })
           )}
-          {props?.currentPage < props?.totalPages && (
+          {currentPage < totalPages && (
             <div
               onClick={() => {
                 if (!isLoading) refetchCategories();

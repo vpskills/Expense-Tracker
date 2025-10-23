@@ -1,5 +1,6 @@
 import { GenerateFiles } from '../common/endpoints';
 import API from '../common/api';
+import toast from 'react-hot-toast';
 
 export const exportFile = async (date, docType) => {
     if (!date || !docType) return;
@@ -35,6 +36,6 @@ export const exportFile = async (date, docType) => {
         window.URL.revokeObjectURL(url);
     } catch (error) {
         console.error('Download failed:', error);
-        alert('Failed to download file');
+        toast.error(error?.message || 'Failed to download file')
     }
 };

@@ -11,9 +11,19 @@ const ExportButton = ({type='excel'}) => {
         <div className="flex flex-col">
             {
                 (type==='excel') ? (
-                    <button onClick={() => handleExport('excel')}>Download Excel</button>
+                    <button
+                        onClick={() => handleExport('excel')}
+                        className="active:scale-95 transition-transform rounded-lg"
+                    >
+                        Export as Excel
+                    </button>
                 ) : (
-                    <button onClick={() => handleExport('pdf')}>Download PDF</button>
+                    <button
+                        onClick={() => handleExport('pdf')}
+                        className="active:scale-95 transition-transform rounded-lg"
+                    >
+                        Export as PDF
+                    </button>
 
                 )
             }

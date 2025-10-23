@@ -6,11 +6,13 @@ import { FcEngineering } from "react-icons/fc";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import { BiSolidFilePdf } from "react-icons/bi";
+import {useNavigate} from 'react-router-dom'
 import ExportButton from './ExportFiles/ExportExcelFile';
 
 const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef }) => {
   const { userData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const popupRef = useRef(null);
 
   const logoutUser = () => {
@@ -66,24 +68,24 @@ const UserDetailPopup = ({ profileWindowOpen, setProfileWindowOpen, toggleRef })
       {/* Menu items */}
       <div className="p-2 max-h-52 overflow-y-auto">
         {/* Profile option */}
-        {/* <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+        <div onClick={() => navigate('/profile')} className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
             <RiAccountCircleFill className="w-5 h-5 text-blue-300" />
           </div>
           <span className="text-sm font-medium text-neutral-200 group-hover:text-white transition-colors">
             View Profile
           </span>
-        </div> */}
+        </div>
 
         {/* Settings option */}
-        {/* <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
+        <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">
             <Settings className="w-5 h-5 text-orange-500" />
           </div>
           <span className="text-sm font-medium text-neutral-200 group-hover:text-white transition-colors">
             Settings
           </span>
-        </div> */}
+        </div>
 
         <div className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-700/50 transition-colors cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-neutral-700/50 group-hover:bg-neutral-600/50 transition-colors">

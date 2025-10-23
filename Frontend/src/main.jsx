@@ -12,6 +12,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Signup from './Pages/Signup.jsx';
 import { GlobalContextProvider } from './components/GlobalContext.jsx';
 import ExpenseDetailPage from './components/ListExpenses/ExpenseDetailPage.jsx';
+import Profile from './Pages/Profile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
         element: (
           <AuthWrapper authenticate={false}>
             <Signup />
+          </AuthWrapper>
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <AuthWrapper>
+            <Profile />
           </AuthWrapper>
         ),
       },
