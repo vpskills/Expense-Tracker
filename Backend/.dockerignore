@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+
+# Build outputs (in case of local builds)
+build
+dist
+out
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Database files (if using SQLite or local Prisma DB)
+*.sqlite
+prisma/dev.db
+
+# Git & Docker
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+
+# Editor & OS junk
+.vscode
+.idea
+.DS_Store
+*.swp
+*.swo
