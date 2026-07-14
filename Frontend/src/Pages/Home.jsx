@@ -13,13 +13,13 @@ const Home = () => {
   const { calenderType } = useGlobalContext();
 
   return (
-    <div className="relative md:static flex flex-col justify-center md:flex-row md:h-full md:max-w-7xl md:p-5 mx-auto md:gap-3 text-gray-400 overflow-auto custom-scroll">
-      <div className="flex-0 md:flex-1 flex gap-1 flex-col h-full">
+    <div className="relative md:static flex flex-col justify-center md:flex-row md:h-full md:max-w-7xl md:p-5 mx-auto md:gap-4 text-gray-400 overflow-auto custom-scroll">
+      <div className="flex-0 md:flex-1 md:max-w-lg flex gap-2 flex-col h-full">
         <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         <div
           className={`${
             formVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-          } fixed inset-0 transition-all max-h-svh duration-300 backdrop-blur-xs flex justify-center items-center px-3 md:p-0 md:static md:opacity-100 md:scale-100 z-20`}
+          } fixed h-full inset-0 md:items-start transition-all max-h-svh duration-300 backdrop-blur-xs flex justify-center items-center px-3 md:p-0 md:static md:opacity-100 md:scale-100 z-20`}
         >
           <AddExpenses
             selectedDate={selectedDate}

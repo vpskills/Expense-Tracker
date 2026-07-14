@@ -98,7 +98,7 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
     },
   });
 
-  const handleAddExpense = async () => {
+  const handleAddExpense = async (isExpenseForm=true) => {
     if (!amount || parseFloat(amount) <= 0) {
       toast.error('Please enter a valid amount');
       return;
@@ -116,22 +116,22 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
 
   return (
     <div className="bg-blue-50 dark:bg-neutral-950 z-40 border border-blue-100 dark:border-neutral-800 w-full p-5 rounded-2xl md:mt-2 max-h-11/12 overflow-auto custom-scroll text-blue-950 dark:text-gray-400">
-      <div className="flex border border-blue-200 dark:border-neutral-800 rounded-full overflow-hidden justify-between items-center mb-6">
+      {/* <div className="flex border border-blue-200 dark:border-neutral-800 rounded-full overflow-hidden justify-between items-center mb-6">
         <h2
           onClick={() => setIsExpenseForm(true)}
-          className={`flex-1 ${isExpenseForm && "bg-blue-200 dark:bg-neutral-800"} cursor-pointer dark:border-r p-2 px-4 border-neutral-700 hover:text-gray-300  md:text-xl font-bold flex items-center gap-2`}
+          className={`flex-1 ${isExpenseForm && 'bg-blue-200 dark:bg-neutral-800'} cursor-pointer dark:border-r p-2 px-4 border-neutral-700 hover:text-gray-300 md:text-md font-bold flex items-center gap-2`}
         >
           <Plus className={'text-rose-500'} />
           Expense
         </h2>
         <h2
           onClick={() => setIsExpenseForm(false)}
-          className={`flex-1 ${!isExpenseForm && "bg-blue-200 dark:bg-neutral-800"} cursor-pointer hover:text-gray-300 p-2 px-4 md:text-xl font-bold flex items-center gap-2 justify-end`}
+          className={`flex-1 ${!isExpenseForm && 'bg-blue-200 dark:bg-neutral-800'} cursor-pointer hover:text-gray-300 p-2 px-4 md:text-md font-bold flex items-center gap-2 justify-end`}
         >
           <Plus className="text-emerald-500" />
           Income
         </h2>
-      </div>
+      </div> */}
 
       <div className="space-y-4">
         <InputField
@@ -167,15 +167,22 @@ const AddExpenses = ({ selectedDate, setFormVisible }) => {
           totalPages={data?.totalPages}
         />
 
-        <button
-          onClick={handleAddExpense}
-          disabled={isPending || isFutureDate(selectedDate)}
-          className={`w-full ${
-            isExpenseForm ? 'bg-rose-700' : 'bg-emerald-700'
-          } text-white font-semibold mt-4 py-3 px-6 md:rounded-lg rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50`}
-        >
-          {isExpenseForm ? 'Add Expense' : 'Add Amount'}
-        </button>
+        <div className='flex gap-2'>
+          <button
+            onClick={()=>handleAddExpense(true)}
+            disabled={isPending || isFutureDate(selectedDate)}
+            className={`w-full bg-rose-700 text-white font-semibold mt-4 py-2 px-6 rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50`}
+          >
+            {'Add Expense'}
+          </button>
+          <button
+            onClick={()=>handleAddExpense(false)}
+            disabled={isPending || isFutureDate(selectedDate)}
+            className={`w-full bg-emerald-700 text-white font-semibold mt-4 py-2 px-6 rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:opacity-50`}
+          >
+            {'Add Amount'}
+          </button>
+        </div>
       </div>
     </div>
   );

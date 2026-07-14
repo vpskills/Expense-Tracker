@@ -172,10 +172,12 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
           <div
             key={index}
             onClick={() => {
-              !isFutureDate(dayObj) && setSelectedDate(new Date(dayObj.date));
-              isMobile && !isFutureDate(dayObj) && setOpenCalender(false);
+              if (!isFutureDate(dayObj)) setSelectedDate(new Date(dayObj.date));
+              if (isMobile && !isFutureDate(dayObj)) {
+                setOpenCalender(false);
+              }
             }}
-            className={`py-[7px] md:py-3 border dark:border-neutral-800 flex items-center justify-center rounded-full md:rounded-lg font-medium transition-all duration-500 text-xl
+            className={`py-[5px] md:py-2 border dark:border-neutral-800 flex items-center justify-center rounded-full md:rounded-lg font-medium transition-all duration-300 text-xl
             ${
               dayObj.isCurrentMonth
                 ? 'bg-blue-200 text-blue-950 border-0 dark:bg-neutral-900 dark:text-gray-400 hover:bg-neutral-800'
@@ -183,7 +185,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
             }
             ${
               isDateSelected(new Date(dayObj.date))
-                ? 'bg-rose-500 text-white hover:bg-rose-500'
+                ? 'bg-rose-500 dark:bg-rose-950 text-white dark:text-white hover:bg-rose-800'
                 : ''
             }
             ${
